@@ -8,6 +8,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter);
+  --font-krona: var(--font-krona);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -157,6 +159,48 @@
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes content-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loading-dot {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
 @keyframes gradient-drift {
   0%, 100% {
     transform: scale(1.05) translate(0, 0);
@@ -172,6 +216,28 @@
   }
 }
 
+@keyframes card-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0.3;
+    transform: translateY(-32px) scale(0.95);
+  }
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-subtle-scale {
   animation: subtle-scale 250ms ease-out;
 }
@@ -184,6 +250,30 @@
   animation: slide-up 300ms ease-out;
 }
 
+.animate-fade-in {
+  animation: fade-in 400ms ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 500ms ease-out forwards;
+}
+
+.animate-content-reveal {
+  animation: content-reveal 400ms ease-out;
+}
+
+.animate-loading-dot {
+  animation: loading-dot 1.4s ease-in-out infinite;
+}
+
 .animate-gradient-drift {
   animation: gradient-drift 15s ease-in-out infinite;
+}
+
+.animate-card-exit {
+  animation: card-exit 500ms ease-out forwards;
+}
+
+.animate-card-enter {
+  animation: card-enter 500ms ease-out forwards;
 }

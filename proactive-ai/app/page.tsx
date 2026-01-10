@@ -1,28 +1,76 @@
 'use client';
 
-import { LeftPanel } from "@/components/LeftPanel";
 import { NoticingCard } from "@/components/NoticingCard";
-import { useNoticingTimeline } from "@/hooks/useNoticingTimeline";
+import { AnimatedGradient } from "@/components/AnimatedGradient";
+import { useNoticingTimeline, type NoticingState } from "@/hooks/useNoticingTimeline";
+import { getPageConfig } from "@/lib/pageContent";
 import { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const {
     currentState,
     currentStateIndex,
     mode,
-    isTransitioning,
     reset,
-    toggleMode
+    toggleMode,
+    goToState
   } = useNoticingTimeline();
 
-  // Background gradient from Figma design
-  const bgImage = "https://www.figma.com/api/mcp/asset/f7ed65b8-a09e-468a-a4b5-fdcd20dcc269";
+  // Page 1 configuration
+  const pageConfig = getPageConfig(1);
+  const LeftPanelComponent = pageConfig.leftPanelComponent;
+
+  // Card stack state - maintains history of visible cards
+  const [cardStack, setCardStack] = useState<NoticingState[]>([]);
 
   // Resizable panels state
   const [leftWidth, setLeftWidth] = useState(50); // percentage
   const [isResizing, setIsResizing] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showFullscreenButton, setShowFullscreenButton] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Update card stack when state changes
+  useEffect(() => {
+    setCardStack(() => {
+      // For state 0 (greeting), just show greeting
+      if (currentStateIndex === 0) {
+        return [currentState];
+      }
+
+      // For states 1-5 (meeting invite through insights), show greeting + meeting card
+      // The meeting card updates in place with loading/insights
+      if (currentStateIndex >= 1 && currentStateIndex <= 5) {
+        return [
+          { id: 0, type: 'greeting', greetingText: "Good Morning", userName: "Pradeep", bodyText: "Today looks busy but manageable" },
+          { ...currentState, id: 1 } // Force ID to 1 so Framer Motion doesn't think it's a new card
+        ];
+      }
+
+      // For state 6 (stacked with dark card), show greeting + meeting + dark
+      if (currentStateIndex === 6) {
+        return [
+          { id: 0, type: 'greeting', greetingText: "Good Morning", userName: "Pradeep", bodyText: "Today looks busy but manageable" },
+          {
+            id: 1,
+            type: 'insight',
+            headerText: "New meeting invite",
+            subheaderText: `From Sanjana at 3:30PM`,
+            bodyText: "It overlaps with your focus time",
+            insightLines: [
+              { icon: 'calendar', text: 'You calendar is 92% booked' },
+              { icon: 'sleep', text: 'You slept only 4h 52m last night' }
+            ]
+          },
+          { ...currentState, id: 6 }
+        ];
+      }
+
+      return [currentState];
+    });
+  }, [currentState, currentStateIndex]);
 
   // Check if desktop on mount
   useEffect(() => {
@@ -32,6 +80,34 @@ export default function Home() {
     checkDesktop();
     window.addEventListener('resize', checkDesktop);
     return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
+
+  // Fullscreen toggle handler
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  // Auto-hide fullscreen button after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowFullscreenButton(false);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   // Keyboard shortcut: Press 'R' to reset
@@ -56,7 +132,7 @@ export default function Home() {
       const newLeftWidth = ((e.clientX - containerRect.left) / containerRect.width) * 100;
 
       // Calculate minimum widths in percentage
-      const minWidthPx = 400;
+      const minWidthPx = 600;
       const minWidthPercent = (minWidthPx / containerRect.width) * 100;
 
       // Constrain to min width for both panels
@@ -83,7 +159,7 @@ export default function Home() {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col md:flex-row h-screen w-full relative"
+      className="flex flex-col md:flex-row min-h-screen md:h-screen w-full relative"
       style={{
         cursor: isResizing ? 'col-resize' : 'auto',
         userSelect: isResizing ? 'none' : 'auto'
@@ -91,49 +167,133 @@ export default function Home() {
     >
       {/* 🔽 Left Panel - Bottom on mobile, Left on desktop with resizable width */}
       <div
-        className="order-2 md:order-1 h-auto md:h-full"
+        className="order-2 md:order-1 md:h-full relative md:overflow-hidden"
         style={{
           width: isDesktop ? `${leftWidth}%` : '100%',
-          minWidth: isDesktop ? '400px' : 'auto'
+          minWidth: isDesktop ? '600px' : 'auto'
         }}
       >
-        <LeftPanel />
+        <LeftPanelComponent />
+
+        {/* 🔽 Page Numbers - Top horizontal on mobile, Top left vertical on desktop */}
+        <div className="absolute top-8 left-6 md:top-6 md:left-5 flex flex-row md:flex-col gap-4 md:gap-1 text-black/40 font-inter text-sm z-20">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+            <a
+              key={num}
+              href={num === 1 ? '/' : `/${num}`}
+              className={`hover:text-black/80 transition-colors ${num === 1 ? 'text-black font-semibold' : ''}`}
+            >
+              {num}
+            </a>
+          ))}
+        </div>
       </div>
 
-      {/* 🔽 Right Panel - Top on mobile (fixed 600px), Right on desktop with resizable width */}
+      {/* 🔽 Right Panel - Top on mobile (500px), Right on desktop with resizable width */}
       <div
-        className="relative overflow-hidden order-1 md:order-2 h-[600px] md:h-full"
+        className="relative overflow-hidden order-1 md:order-2 h-[500px] md:h-full flex-shrink-0 group"
         style={{
           width: isDesktop ? `${100 - leftWidth}%` : '100%',
-          minWidth: isDesktop ? '400px' : 'auto'
+          minWidth: isDesktop ? '600px' : 'auto'
         }}
       >
-        {/* Background Image with Blur */}
-        <div
-          className="absolute inset-0 bg-cover bg-center animate-gradient-drift"
-          style={{ backgroundImage: `url(${bgImage})` }}
-        />
-        <div className="absolute inset-0 backdrop-blur-[150px] bg-black/5" />
+        {/* Animated Gradient Background */}
+        <AnimatedGradient className="absolute inset-0" colors={pageConfig.colors} />
 
-        {/* Centered Card */}
+        {/* 🔽 Fullscreen Button - Top Right */}
+        <button
+          onClick={toggleFullscreen}
+          className={`absolute top-8 right-6 md:top-6 md:right-5 z-30 backdrop-blur-md bg-black/60 text-white rounded-full h-9 w-9 flex items-center justify-center transition-all hover:bg-black/70 ${
+            showFullscreenButton ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          }`}
+          aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+        >
+          {isFullscreen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+            </svg>
+          )}
+        </button>
+
+        {/* Centered Card Stack */}
         <div className="relative h-full flex items-center justify-center">
-          <NoticingCard
-            currentState={currentState}
-            currentStateIndex={currentStateIndex}
-            isTransitioning={isTransitioning}
-          />
+          <div className="flex flex-col-reverse items-center gap-[10px]">
+            <AnimatePresence initial={false}>
+              {cardStack.map((card, index) => {
+                // Only animate on card entry (when a new card is added to stack)
+                // Cards should not animate when insight lines update within them
+                const isNewCard = index === cardStack.length - 1;
+
+                // Calculate opacity: newest card = 1, older cards = 0.5
+                const opacity = index === cardStack.length - 1 ? 1 : 0.5;
+
+                // New cards should appear after a delay: 400ms for 2nd card, 200ms for 3rd card
+                const appearDelay = isNewCard && cardStack.length > 1 ? 0.4 : 0;
+
+                return (
+                  <motion.div
+                    key={`card-${card.id}`}
+                    layout
+                    initial={isNewCard ? { y: 0, opacity: 0 } : false}
+                    animate={{ y: 0, opacity }}
+                    transition={{
+                      layout: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                      opacity: { duration: 0.8, delay: appearDelay }
+                    }}
+                  >
+                    <NoticingCard
+                      currentState={card}
+                      currentStateIndex={card.id}
+                      isTransitioning={false}
+                    />
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
         </div>
 
         {/* 🔽 Controls (Bottom) */}
         <div className="absolute bottom-4 md:bottom-8 left-4 md:left-5 right-4 md:right-5 flex items-center justify-between">
-          {/* Auto/Manual Toggle */}
-          <button
-            onClick={toggleMode}
-            className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 flex items-center gap-1.5 md:gap-2 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
-          >
-            <span className={mode === 'auto' ? 'opacity-100' : 'opacity-20'}>Auto</span>
-            <span className={mode === 'manual' ? 'opacity-100' : 'opacity-20'}>Manual</span>
-          </button>
+          {/* Left side: Auto/Manual Toggle + Manual buttons */}
+          <div className="flex items-center gap-2">
+            {/* Auto/Manual Toggle */}
+            <button
+              onClick={toggleMode}
+              className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 flex items-center gap-1.5 md:gap-2 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+            >
+              <span className={mode === 'auto' ? 'opacity-100' : 'opacity-20'}>Auto</span>
+              <span className={mode === 'manual' ? 'opacity-100' : 'opacity-20'}>Manual</span>
+            </button>
+
+            {/* Manual Mode Buttons */}
+            {mode === 'manual' && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => goToState(1)}
+                  className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+                >
+                  Change Detected
+                </button>
+                <button
+                  onClick={() => goToState(5)}
+                  className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+                >
+                  Pattern Found
+                </button>
+                <button
+                  onClick={() => goToState(6)}
+                  className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+                >
+                  Action Generated
+                </button>
+              </div>
+            )}
+          </div>
 
           {/* Reset Button with keyboard hint */}
           <button
@@ -152,6 +312,7 @@ export default function Home() {
           className="absolute top-0 bottom-0 w-1 bg-transparent hover:bg-black/10 flex items-center justify-center group z-50 hidden md:flex"
           style={{ left: `${leftWidth}%` }}
           onMouseDown={() => setIsResizing(true)}
+          onDoubleClick={() => setLeftWidth(50)}
         >
           {/* Expanded hover target area (20px total: 10px on each side) */}
           <div
