@@ -1,6 +1,3 @@
 {
-  "buildCommand": "cd proactive-ai && npm install && npm run build",
-  "outputDirectory": "proactive-ai/.next",
-  "installCommand": "cd proactive-ai && npm install",
-  "framework": "nextjs"
+  "rootDirectory": "proactive-ai"
 }
