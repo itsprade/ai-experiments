@@ -1,3 +1,9 @@
 {
-  "rootDirectory": "proactive-ai"
+  "version": 2,
+  "builds": [
+    {
+      "src": "proactive-ai/package.json",
+      "use": "@vercel/next"
+    }
+  ]
 }
