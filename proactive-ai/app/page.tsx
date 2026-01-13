@@ -25,7 +25,7 @@ export default function Home() {
   const [cardStack, setCardStack] = useState<NoticingState[]>([]);
 
   // Resizable panels state
-  const [leftWidth, setLeftWidth] = useState(50); // percentage
+  const [leftWidth, setLeftWidth] = useState(60); // percentage
   const [isResizing, setIsResizing] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -175,8 +175,8 @@ export default function Home() {
       >
         <LeftPanelComponent />
 
-        {/* 🔽 Page Numbers - Top horizontal on mobile, Top left vertical on desktop */}
-        <div className="absolute top-8 left-6 md:top-6 md:left-5 flex flex-row md:flex-col gap-4 md:gap-1 text-black/40 font-inter text-sm z-20">
+        {/* 🔽 Page Numbers - Hidden for now (single page release) */}
+        {/* <div className="absolute top-8 left-6 md:top-6 md:left-5 flex flex-row md:flex-col gap-4 md:gap-1 text-black/40 font-inter text-sm z-20">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
             <a
               key={num}
@@ -186,10 +186,10 @@ export default function Home() {
               {num}
             </a>
           ))}
-        </div>
+        </div> */}
       </div>
 
-      {/* 🔽 Right Panel - Top on mobile (500px), Right on desktop with resizable width */}
+      {/* 🔽 Right Panel - Top on mobile, Right on desktop with resizable width */}
       <div
         className="relative overflow-hidden order-1 md:order-2 h-[500px] md:h-full flex-shrink-0 group"
         style={{
@@ -220,8 +220,8 @@ export default function Home() {
         </button>
 
         {/* Centered Card Stack */}
-        <div className="relative h-full flex items-center justify-center">
-          <div className="flex flex-col-reverse items-center gap-[10px]">
+        <div className="relative h-full flex items-start md:items-center justify-center pt-16 md:pt-0">
+          <div className="flex flex-col-reverse items-center gap-[10px] scale-[0.7] md:scale-100 origin-top md:origin-center">
             <AnimatePresence initial={false}>
               {cardStack.map((card, index) => {
                 // Only animate on card entry (when a new card is added to stack)
@@ -258,9 +258,9 @@ export default function Home() {
         </div>
 
         {/* 🔽 Controls (Bottom) */}
-        <div className="absolute bottom-4 md:bottom-8 left-4 md:left-5 right-4 md:right-5 flex items-center justify-between">
+        <div className="absolute bottom-4 md:bottom-8 left-4 md:left-5 right-4 md:right-5 flex items-end md:items-center justify-between">
           {/* Left side: Auto/Manual Toggle + Manual buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col-reverse md:flex-row items-start md:items-center gap-2">
             {/* Auto/Manual Toggle */}
             <button
               onClick={toggleMode}
@@ -270,9 +270,9 @@ export default function Home() {
               <span className={mode === 'manual' ? 'opacity-100' : 'opacity-20'}>Manual</span>
             </button>
 
-            {/* Manual Mode Buttons */}
+            {/* Manual Mode Buttons - Above toggle on mobile, inline on desktop */}
             {mode === 'manual' && (
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
                 <button
                   onClick={() => goToState(1)}
                   className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
