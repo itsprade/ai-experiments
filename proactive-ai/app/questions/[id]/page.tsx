@@ -1,15 +1,14 @@
 'use client';
 
 import { NoticingCard } from "@/components/NoticingCard";
-import { AnimatedGradient } from "@/components/AnimatedGradient";
+import { Page2Content } from "@/components/pages/Page2Content";
 import { useNoticingTimeline } from "@/hooks/useNoticingTimeline";
-import { getPageConfig } from "@/lib/pageContent";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 
-export default function PageNumber() {
+export default function QuestionDetailPage() {
   const params = useParams();
-  const pageNumber = parseInt(params.page as string);
+  const questionId = params.id ? parseInt(params.id as string, 10) : undefined;
 
   const {
     currentState,
@@ -19,14 +18,16 @@ export default function PageNumber() {
     toggleMode
   } = useNoticingTimeline();
 
-  // Page configuration
-  const pageConfig = getPageConfig(pageNumber);
-  const LeftPanelComponent = pageConfig.leftPanelComponent;
-
   // Resizable panels state
   const [leftWidth, setLeftWidth] = useState(50); // percentage
   const [isResizing, setIsResizing] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  // Initialize isDesktop based on window width to prevent layout shift
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768;
+    }
+    return true; // Default to desktop to prevent flash
+  });
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Check if desktop on mount
@@ -102,19 +103,22 @@ export default function PageNumber() {
           minWidth: isDesktop ? '600px' : 'auto'
         }}
       >
-        <LeftPanelComponent />
+        <Page2Content selectedQuestionId={questionId} />
 
-        {/* 🔽 Page Numbers - Top horizontal on mobile, Top left vertical on desktop */}
-        <div className="absolute top-8 left-6 md:top-6 md:left-5 flex flex-row md:flex-col gap-4 md:gap-1 text-black/40 font-inter text-sm z-20">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-            <a
-              key={num}
-              href={num === 1 ? '/' : `/${num}`}
-              className={`hover:text-black/80 transition-colors ${num === pageNumber ? 'text-black font-semibold' : ''}`}
-            >
-              {num}
-            </a>
-          ))}
+        {/* 🔽 Page Navigation - Vertical rotated text on top-left */}
+        <div className="absolute top-8 left-6 md:top-8 md:left-5 flex flex-row md:flex-col gap-4 md:gap-[26px] text-black/40 font-mono text-xs uppercase tracking-wider z-20">
+          <a
+            href="/"
+            className="hover:text-black/80 transition-colors md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap font-light"
+          >
+            Introduction
+          </a>
+          <a
+            href="/questions"
+            className="hover:text-black/80 transition-colors md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap text-black font-normal"
+          >
+            Questions
+          </a>
         </div>
       </div>
 
@@ -126,8 +130,13 @@ export default function PageNumber() {
           minWidth: isDesktop ? '600px' : 'auto'
         }}
       >
-        {/* Animated Gradient Background */}
-        <AnimatedGradient className="absolute inset-0" colors={pageConfig.colors} />
+        {/* Gradient Background from Figma */}
+        <img
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          src="/gradient-bg-2.png"
+        />
+        <div className="absolute inset-0 backdrop-blur-[150px] bg-black/5" />
 
         {/* Centered Card */}
         <div className="relative h-full flex items-center justify-center">
@@ -155,7 +164,7 @@ export default function PageNumber() {
             className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70 flex items-center gap-2"
           >
             <span>Reset</span>
-            <span className="opacity-50 text-xs">R</span>
+            <span className="opacity-50 text-xs hidden md:inline">R</span>
           </button>
         </div>
       </div>

@@ -21,18 +21,38 @@ export default function Home() {
   const LeftPanelComponent = pageConfig.leftPanelComponent;
 
   // Card stack state - maintains history of visible cards
-  const [cardStack, setCardStack] = useState<NoticingState[]>([]);
+  // Initialize with the greeting state to prevent animation on first render
+  const [cardStack, setCardStack] = useState<NoticingState[]>([currentState]);
+  const isFirstRender = useRef(true);
+  const [hasMounted, setHasMounted] = useState(false);
 
   // Resizable panels state
   const [leftWidth, setLeftWidth] = useState(50); // percentage
   const [isResizing, setIsResizing] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  // Initialize isDesktop based on window width to prevent layout shift
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768;
+    }
+    return true; // Default to desktop to prevent flash
+  });
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showFullscreenButton, setShowFullscreenButton] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Mark as mounted after first render to enable animations
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   // Update card stack when state changes
   useEffect(() => {
+    // Skip the first render since we already initialized with currentState
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     setCardStack(() => {
       // For state 0 (greeting), just show greeting
       if (currentStateIndex === 0) {
@@ -174,18 +194,21 @@ export default function Home() {
       >
         <LeftPanelComponent />
 
-        {/* 🔽 Page Numbers - Hidden for now (single page release) */}
-        {/* <div className="absolute top-8 left-6 md:top-6 md:left-5 flex flex-row md:flex-col gap-4 md:gap-1 text-black/40 font-inter text-sm z-20">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-            <a
-              key={num}
-              href={num === 1 ? '/' : `/${num}`}
-              className={`hover:text-black/80 transition-colors ${num === 1 ? 'text-black font-semibold' : ''}`}
-            >
-              {num}
-            </a>
-          ))}
-        </div> */}
+        {/* 🔽 Page Navigation - Vertical rotated text on top-left */}
+        <div className="absolute top-8 left-6 md:top-8 md:left-5 flex flex-row md:flex-col gap-4 md:gap-[26px] text-black/40 font-mono text-xs uppercase tracking-wider z-20">
+          <a
+            href="/"
+            className="hover:text-black/80 transition-colors text-black font-normal md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap"
+          >
+            Introduction
+          </a>
+          <a
+            href="/questions"
+            className="hover:text-black/80 transition-colors font-light md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap"
+          >
+            Questions
+          </a>
+        </div>
       </div>
 
       {/* 🔽 Right Panel - Top on mobile, Right on desktop with resizable width */}
@@ -236,17 +259,18 @@ export default function Home() {
                 const opacity = index === cardStack.length - 1 ? 1 : 0.5;
 
                 // New cards should appear after a delay: 400ms for 2nd card, 200ms for 3rd card
-                const appearDelay = isNewCard && cardStack.length > 1 ? 0.4 : 0;
+                // Only apply animation after component has mounted to prevent flicker on page load
+                const appearDelay = hasMounted && isNewCard && cardStack.length > 1 ? 0.4 : 0;
 
                 return (
                   <motion.div
                     key={`card-${card.id}`}
-                    layout
-                    initial={isNewCard ? { y: 0, opacity: 0 } : false}
+                    layout={hasMounted}
+                    initial={hasMounted && isNewCard ? { y: 0, opacity: 0 } : false}
                     animate={{ y: 0, opacity }}
                     transition={{
                       layout: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-                      opacity: { duration: 0.8, delay: appearDelay }
+                      opacity: { duration: hasMounted ? 0.8 : 0, delay: appearDelay }
                     }}
                   >
                     <NoticingCard
@@ -323,7 +347,7 @@ export default function Home() {
             className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70 flex items-center gap-2"
           >
             <span>Reset</span>
-            <span className="opacity-50 text-xs">R</span>
+            <span className="opacity-50 text-xs hidden md:inline">R</span>
           </button>
         </div>
       </div>

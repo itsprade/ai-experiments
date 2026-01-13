@@ -3,7 +3,7 @@
 export function Page1Content() {
   return (
     <div className="h-full bg-white overflow-y-auto">
-      <div className="px-6 md:px-16 lg:px-24 py-16 md:py-20 lg:py-24">
+      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-16 md:py-20 lg:py-24">
         <article className="max-w-[640px] mx-auto md:mx-0">
 
           {/* 🔽 Hero Section */}
