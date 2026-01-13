@@ -1,7 +1,6 @@
 'use client';
 
 import { NoticingCard } from "@/components/NoticingCard";
-import { AnimatedGradient } from "@/components/AnimatedGradient";
 import { useNoticingTimeline, type NoticingState } from "@/hooks/useNoticingTimeline";
 import { getPageConfig } from "@/lib/pageContent";
 import { useEffect, useState, useRef } from "react";
@@ -25,7 +24,7 @@ export default function Home() {
   const [cardStack, setCardStack] = useState<NoticingState[]>([]);
 
   // Resizable panels state
-  const [leftWidth, setLeftWidth] = useState(60); // percentage
+  const [leftWidth, setLeftWidth] = useState(50); // percentage
   const [isResizing, setIsResizing] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -197,13 +196,18 @@ export default function Home() {
           minWidth: isDesktop ? '600px' : 'auto'
         }}
       >
-        {/* Animated Gradient Background */}
-        <AnimatedGradient className="absolute inset-0" colors={pageConfig.colors} />
+        {/* Gradient Background from Figma */}
+        <img
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          src="/gradient-bg.png"
+        />
+        <div className="absolute inset-0 backdrop-blur-[150px] bg-black/5" />
 
-        {/* 🔽 Fullscreen Button - Top Right */}
+        {/* 🔽 Fullscreen Button - Top Right (hidden on mobile) */}
         <button
           onClick={toggleFullscreen}
-          className={`absolute top-8 right-6 md:top-6 md:right-5 z-30 backdrop-blur-md bg-black/60 text-white rounded-full h-9 w-9 flex items-center justify-center transition-all hover:bg-black/70 ${
+          className={`hidden md:flex absolute top-6 right-5 z-30 backdrop-blur-md bg-black/60 text-white rounded-full h-9 w-9 items-center justify-center transition-all hover:bg-black/70 ${
             showFullscreenButton ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
           }`}
           aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
@@ -221,7 +225,7 @@ export default function Home() {
 
         {/* Centered Card Stack */}
         <div className="relative h-full flex items-start md:items-center justify-center pt-16 md:pt-0">
-          <div className="flex flex-col-reverse items-center gap-[10px] scale-[0.7] md:scale-100 origin-top md:origin-center">
+          <div className="flex flex-col-reverse items-center gap-[10px] scale-[0.8] md:scale-100 origin-top md:origin-center">
             <AnimatePresence initial={false}>
               {cardStack.map((card, index) => {
                 // Only animate on card entry (when a new card is added to stack)
@@ -270,27 +274,36 @@ export default function Home() {
               <span className={mode === 'manual' ? 'opacity-100' : 'opacity-20'}>Manual</span>
             </button>
 
-            {/* Manual Mode Buttons - Above toggle on mobile, inline on desktop */}
+            {/* Manual Mode Buttons - Progressive reveal based on current state */}
             {mode === 'manual' && (
               <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
-                <button
-                  onClick={() => goToState(1)}
-                  className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
-                >
-                  Change Detected
-                </button>
-                <button
-                  onClick={() => goToState(5)}
-                  className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
-                >
-                  Pattern Found
-                </button>
-                <button
-                  onClick={() => goToState(6)}
-                  className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
-                >
-                  Action Generated
-                </button>
+                {/* Show "Detect change" when at greeting state (0) */}
+                {currentStateIndex === 0 && (
+                  <button
+                    onClick={() => goToState(1)}
+                    className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+                  >
+                    Detect change
+                  </button>
+                )}
+                {/* Show "Find pattern" after change detected (states 1-4) */}
+                {currentStateIndex >= 1 && currentStateIndex < 5 && (
+                  <button
+                    onClick={() => goToState(5)}
+                    className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+                  >
+                    Find pattern
+                  </button>
+                )}
+                {/* Show "Generate action" after pattern found (state 5) */}
+                {currentStateIndex === 5 && (
+                  <button
+                    onClick={() => goToState(6)}
+                    className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+                  >
+                    Generate action
+                  </button>
+                )}
               </div>
             )}
           </div>
