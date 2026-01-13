@@ -15,7 +15,6 @@ export default function PageNumber() {
     currentState,
     currentStateIndex,
     mode,
-    isTransitioning,
     reset,
     toggleMode
   } = useNoticingTimeline();
@@ -135,7 +134,7 @@ export default function PageNumber() {
           <NoticingCard
             currentState={currentState}
             currentStateIndex={currentStateIndex}
-            isTransitioning={isTransitioning}
+            isTransitioning={false}
           />
         </div>
 
