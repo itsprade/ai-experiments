@@ -1,13 +1,47 @@
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
+
 // 🔽 Page 1 - Designing Proactive AI Systems Essay
 
 export function Page1Content() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [thumbnailRect, setThumbnailRect] = useState<DOMRect | null>(null);
+  const thumbnailRef = useRef<HTMLButtonElement>(null);
+
+  // Extract video ID from YouTube URL
+  const videoId = 'AW1sgrEsDHk';
+
+  const handleOpenVideo = () => {
+    if (thumbnailRef.current) {
+      setThumbnailRect(thumbnailRef.current.getBoundingClientRect());
+      setIsVideoOpen(true);
+      // Trigger animation after a brief delay to ensure initial state is rendered
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsAnimating(true);
+        });
+      });
+    }
+  };
+
+  const handleCloseVideo = () => {
+    setIsAnimating(false);
+    // Wait for animation to complete before hiding
+    setTimeout(() => {
+      setIsVideoOpen(false);
+      setThumbnailRect(null);
+    }, 400);
+  };
+
   return (
     <div className="h-full bg-white overflow-y-auto">
       <div className="px-6 md:px-16 lg:px-24 pt-24 pb-80 md:pb-20 md:pt-20 lg:py-24">
         <article className="max-w-[640px] mx-auto md:mx-0">
 
           {/* 🔽 Hero Section */}
-          <header className="mb-16 md:mb-20">
+          <header className="mb-10 md:mb-12">
             <h1
               className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black font-bold mb-6"
               style={{ fontFamily: 'var(--font-bricolage)' }}
@@ -24,6 +58,31 @@ export function Page1Content() {
               </p>
             </div>
           </header>
+
+          {/* 🔽 Video Thumbnail */}
+          <div className="mb-10 md:mb-12">
+            <button
+              ref={thumbnailRef}
+              onClick={handleOpenVideo}
+              className={`relative w-[160px] h-[90px] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-0 -rotate-4 group ${isVideoOpen ? 'invisible' : ''}`}
+              aria-label="Watch video"
+            >
+              {/* YouTube Thumbnail */}
+              <img
+                src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+                alt="Video thumbnail"
+                className="w-full h-full object-cover"
+              />
+              {/* Play Button Overlay */}
+              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-black ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
+            </button>
+          </div>
 
           {/* 🔽 The Paradigm Shift */}
           <section className="mb-14 md:mb-16">
@@ -289,6 +348,63 @@ export function Page1Content() {
           </footer>
         </article>
       </div>
+
+      {/* 🔽 Video Modal with Expand Animation */}
+      {isVideoOpen && thumbnailRect && (
+        <div
+          className="fixed inset-0 z-50"
+          onClick={handleCloseVideo}
+        >
+          {/* Backdrop */}
+          <div
+            className={`absolute inset-0 bg-black transition-opacity duration-400 ease-out ${isAnimating ? 'opacity-90' : 'opacity-0'}`}
+          />
+
+          {/* Expanding Video Container */}
+          <div
+            className="absolute overflow-hidden shadow-2xl transition-all duration-400 ease-out"
+            style={{
+              top: isAnimating ? '50%' : thumbnailRect.top,
+              left: isAnimating ? '50%' : thumbnailRect.left,
+              width: isAnimating ? 'min(90vw, 896px)' : thumbnailRect.width,
+              height: isAnimating ? 'min(50.625vw, 504px)' : thumbnailRect.height,
+              transform: isAnimating
+                ? 'translate(-50%, -50%) rotate(0deg)'
+                : 'translate(0, 0) rotate(-4deg)',
+              borderRadius: isAnimating ? '16px' : '8px',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleCloseVideo}
+              className={`absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/50 hover:bg-black/70 flex items-center justify-center transition-all duration-300 ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
+              aria-label="Close video"
+            >
+              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
+              </svg>
+            </button>
+
+            {/* YouTube Embed - only load when expanded */}
+            {isAnimating ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                title="Video"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <img
+                src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+                alt="Video thumbnail"
+                className="w-full h-full object-cover"
+              />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

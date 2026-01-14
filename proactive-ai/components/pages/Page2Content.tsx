@@ -24,7 +24,7 @@ const categories: Category[] = [
     title: "Agency & Control",
     subtitle: "Where does AI end and human begin?",
     questions: [
-      { id: 1, text: "What decisions can AI make automatically vs. what needs human confirmation?", detail: "This explores the spectrum of autonomy—from fully automated background tasks to high-stakes decisions requiring explicit approval. The prototype could visualize different decision tiers and their confirmation patterns." },
+      { id: 1, text: "What decisions can AI make automatically vs. what needs human confirmation?", detail: "This explores the spectrum of autonomy—from fully automated background tasks to high-stakes decisions requiring explicit approval. The prototype could visualize different decision tiers and their confirmation patterns.", enabled: true },
       { id: 2, text: "How do you design the handoff moment when AI passes control to the user?", detail: "The transition from AI-driven to human-controlled action is a critical UX moment. A prototype might explore different handoff animations, context summaries, and state preservation techniques." },
       { id: 3, text: "How do users adjust AI's autonomy level? (\"Do more for me\" vs \"Let me decide\")", detail: "Users need intuitive controls to calibrate how much AI should do. This could be a slider, contextual settings, or adaptive controls that learn user preferences over time." },
       { id: 4, text: "What should the user feel when AI acts on their behalf—empowered or anxious?", detail: "Emotional design matters. The prototype could test different feedback patterns—celebratory vs. subtle confirmation—to find the right balance of reassurance without condescension." },
@@ -383,10 +383,38 @@ export function Page2Content({ selectedQuestionId, onQuestionSelect }: Page2Cont
 
           {/* Footer */}
           <footer className="pt-8 border-t border-black/[0.06]">
-            <p className="font-inter text-[13px] leading-[1.5] text-black/40">
-              <span className="text-black/60 font-medium">This is a living document.</span>{' '}
-              <span className="text-black/50">Questions and prototypes will evolve as we explore.</span>
-            </p>
+            <div className="flex items-center justify-between font-mono text-xs uppercase tracking-wider text-black/40">
+              <p className="flex items-center gap-1">
+                <span>Built by</span>
+                <a
+                  href="https://itsprade.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-black hover:text-black/80 transition-colors"
+                >
+                  itsprade
+                </a>
+              </p>
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-orange-400" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                  </svg>
+                  Claude Code
+                </span>
+                <a
+                  href="https://x.com/itsprade"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-black/80 transition-colors"
+                  aria-label="Twitter"
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
           </footer>
         </article>
       </div>

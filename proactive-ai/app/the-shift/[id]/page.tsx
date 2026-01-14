@@ -89,11 +89,7 @@ export default function QuestionDetailPage() {
   return (
     <div
       ref={containerRef}
-      className="flex flex-col md:flex-row min-h-screen md:h-screen w-full relative"
-      style={{
-        cursor: isResizing ? 'col-resize' : 'auto',
-        userSelect: isResizing ? 'none' : 'auto'
-      }}
+      className={`flex flex-col md:flex-row min-h-screen md:h-screen w-full relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
     >
       {/* 🔽 Left Panel - Bottom on mobile, Left on desktop with resizable width */}
       <div
