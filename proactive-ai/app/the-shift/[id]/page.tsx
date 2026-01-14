@@ -114,58 +114,60 @@ export default function QuestionDetailPage() {
             Introduction
           </a>
           <a
-            href="/questions"
+            href="/the-shift"
             className="hover:text-black/80 transition-colors md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap text-black font-normal"
           >
-            Questions
+            The Shift
           </a>
         </div>
       </div>
 
       {/* 🔽 Right Panel - Top on mobile (500px), Right on desktop with resizable width */}
       <div
-        className="relative overflow-hidden order-1 md:order-2 h-[500px] md:h-full flex-shrink-0"
+        className="order-1 md:order-2 flex-shrink-0 p-6 md:p-0"
         style={{
           width: isDesktop ? `${100 - leftWidth}%` : '100%',
           minWidth: isDesktop ? '600px' : 'auto'
         }}
       >
-        {/* Gradient Background from Figma */}
-        <img
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          src="/gradient-bg-2.png"
-        />
-        <div className="absolute inset-0 backdrop-blur-[150px] bg-black/5" />
-
-        {/* Centered Card */}
-        <div className="relative h-full flex items-center justify-center">
-          <NoticingCard
-            currentState={currentState}
-            currentStateIndex={currentStateIndex}
-            isTransitioning={false}
+        <div className="relative overflow-hidden h-[450px] md:h-full rounded-3xl md:rounded-none squircle-mobile bg-white">
+          {/* Gradient Background from Figma */}
+          <img
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-110 blur-[80px]"
+            src="/gradient-bg-2.png"
           />
-        </div>
+          <div className="absolute inset-0 bg-black/5" />
 
-        {/* 🔽 Controls (Bottom) */}
-        <div className="absolute bottom-4 md:bottom-8 left-4 md:left-5 right-4 md:right-5 flex items-center justify-between">
-          {/* Auto/Manual Toggle */}
-          <button
-            onClick={toggleMode}
-            className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 flex items-center gap-1.5 md:gap-2 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
-          >
-            <span className={mode === 'auto' ? 'opacity-100' : 'opacity-20'}>Auto</span>
-            <span className={mode === 'manual' ? 'opacity-100' : 'opacity-20'}>Manual</span>
-          </button>
+          {/* Centered Card */}
+          <div className="relative h-full flex items-center justify-center">
+            <NoticingCard
+              currentState={currentState}
+              currentStateIndex={currentStateIndex}
+              isTransitioning={false}
+            />
+          </div>
 
-          {/* Reset Button with keyboard hint */}
-          <button
-            onClick={reset}
-            className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70 flex items-center gap-2"
-          >
-            <span>Reset</span>
-            <span className="opacity-50 text-xs hidden md:inline">R</span>
-          </button>
+          {/* 🔽 Controls (Bottom) */}
+          <div className="absolute bottom-4 md:bottom-8 left-4 md:left-5 right-4 md:right-5 flex items-center justify-between">
+            {/* Auto/Manual Toggle */}
+            <button
+              onClick={toggleMode}
+              className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 flex items-center gap-1.5 md:gap-2 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70"
+            >
+              <span className={mode === 'auto' ? 'opacity-100' : 'opacity-20'}>Auto</span>
+              <span className={mode === 'manual' ? 'opacity-100' : 'opacity-20'}>Manual</span>
+            </button>
+
+            {/* Reset Button with keyboard hint */}
+            <button
+              onClick={reset}
+              className="backdrop-blur-md bg-black/60 text-white rounded-[52px] h-9 px-3 md:px-4 font-inter text-xs md:text-sm tracking-[-0.14px] transition-all hover:bg-black/70 flex items-center gap-2"
+            >
+              <span>Reset</span>
+              <span className="opacity-50 text-xs hidden md:inline">R</span>
+            </button>
+          </div>
         </div>
       </div>
 

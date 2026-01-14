@@ -35,7 +35,7 @@ export function Page1Content() {
             </h2>
 
             <div className="space-y-4 mb-6">
-              <div className="border-l-2 border-black/10 pl-4">
+              <div className="border-l border-black/10 pl-4">
                 <p className="font-inter text-[11px] font-medium text-black/40 uppercase tracking-[0.1em] mb-2">Today</p>
                 <p className="font-inter text-[14px] leading-[1.5] text-black/60 flex items-center flex-wrap gap-x-2 gap-y-1">
                   <span>User</span>
@@ -54,7 +54,7 @@ export function Page1Content() {
                 </p>
               </div>
 
-              <div className="border-l-2 border-black pl-4">
+              <div className="border-l border-black pl-4">
                 <p className="font-inter text-[11px] font-medium text-black/40 uppercase tracking-[0.1em] mb-2">Tomorrow</p>
                 <p className="font-inter text-[14px] leading-[1.5] text-black/80 flex items-center flex-wrap gap-x-2 gap-y-1">
                   <span>AI Layer</span>

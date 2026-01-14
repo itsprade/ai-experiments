@@ -124,12 +124,12 @@ const states: NoticingState[] = [
 // Timing for each state (in milliseconds)
 // State 0: Good morning - 2s
 // State 1: Meeting invite - 2s
-// State 2: Loading "Analyzing impact..." - 1s
+// State 2: Loading "Analyzing impact..." - 2s (longer so users can read)
 // State 3: Calendar insight - 2s (stays visible)
-// State 4: Loading "Checking patterns..." - 1s
+// State 4: Loading "Checking patterns..." - 2s (longer so users can read)
 // State 5: Sleep insight added - 2s
 // State 6: Black card appears - holds
-const stateDurations = [2000, 2000, 1000, 2000, 1000, 2000, 0];
+const stateDurations = [2000, 2000, 2000, 2000, 2000, 2000, 0];
 
 export type PlayMode = 'auto' | 'manual';
 

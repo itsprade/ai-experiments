@@ -92,74 +92,86 @@ const categories: Category[] = [
   },
   {
     id: 7,
-    title: "Adaptation & Learning",
-    subtitle: "How does AI learn users?",
+    title: "Continuity & Recognition",
+    subtitle: "How do users find home in a shape-shifting product?",
     questions: [
-      { id: 31, text: "How does the user know what AI has learned about them?", detail: "User models should be transparent. This explores profile views, preference summaries, and 'what AI knows' dashboards." },
-      { id: 32, text: "Can users edit or correct what AI thinks it knows?", detail: "Wrong assumptions compound over time. The prototype explores correction interfaces and preference overrides." },
-      { id: 33, text: "How does AI handle conflict between past behavior and current context?", detail: "People change. This explores how AI balances historical patterns with real-time signals." },
-      { id: 34, text: "What does onboarding look like when the system is different for everyone?", detail: "Personalized systems can't show generic tours. The prototype explores adaptive onboarding that teaches the user's specific experience." },
-      { id: 35, text: "How do you show AI getting smarter over time?", detail: "Progress is motivating. This explores subtle ways to demonstrate that the system is learning and improving." },
+      { id: 31, text: "How do you build a library of \"intent primitives\" — patterns tied to user goals that AI reaches for before generating something new?", detail: "Intent primitives are reusable patterns mapped to user goals. The prototype explores how AI can prioritize familiar, proven patterns over novel generation." },
+      { id: 32, text: "How do users build trust with a system that's never the same twice?", detail: "Consistency breeds familiarity. This explores what anchors—visual, behavioral, or structural—help users feel at home despite constant change." },
+      { id: 33, text: "What makes your product yours when the AI could generate anything?", detail: "Identity transcends generation. The prototype explores the signature elements that persist regardless of what AI creates." },
+      { id: 34, text: "Where do you draw the line between \"adaptive\" and \"unfamiliar\"?", detail: "Adaptation has limits. This explores thresholds where helpfulness becomes disorientation and how to detect them." },
+      { id: 35, text: "What's the cost of novelty? When does \"fresh\" become \"exhausting\"?", detail: "Novelty has cognitive overhead. The prototype explores when users want surprise vs. when they need predictability." },
     ]
   },
   {
     id: 8,
-    title: "Consistency & Predictability",
-    subtitle: "How do users navigate non-deterministic systems?",
+    title: "Adaptation & Learning",
+    subtitle: "How does AI learn users?",
     questions: [
-      { id: 36, text: "What anchors stay fixed so users can orient themselves?", detail: "Navigation needs stable landmarks. The prototype identifies what must never change in an otherwise dynamic interface." },
-      { id: 37, text: "How do users build expectations when the interface keeps changing?", detail: "Predictability enables mastery. This explores patterns that help users anticipate system behavior despite variation." },
-      { id: 38, text: "What makes a product feel like itself when every screen is generated?", detail: "Brand identity transcends layout. The prototype explores voice, animation, and interaction patterns that define product character." },
-      { id: 39, text: "How do you maintain signature moments in dynamic UI?", detail: "Some moments matter for emotional connection. This explores how to preserve key experiences in generated interfaces." },
-      { id: 40, text: "How much variation is too much?", detail: "There's a threshold where change becomes chaos. The prototype tests where that line is for different types of content." },
+      { id: 36, text: "How does the user know what AI has learned about them?", detail: "User models should be transparent. This explores profile views, preference summaries, and 'what AI knows' dashboards." },
+      { id: 37, text: "Can users edit or correct what AI thinks it knows?", detail: "Wrong assumptions compound over time. The prototype explores correction interfaces and preference overrides." },
+      { id: 38, text: "How does AI handle conflict between past behavior and current context?", detail: "People change. This explores how AI balances historical patterns with real-time signals." },
+      { id: 39, text: "What does onboarding look like when the system is different for everyone?", detail: "Personalized systems can't show generic tours. The prototype explores adaptive onboarding that teaches the user's specific experience." },
+      { id: 40, text: "How do you show AI getting smarter over time?", detail: "Progress is motivating. This explores subtle ways to demonstrate that the system is learning and improving." },
     ]
   },
   {
     id: 9,
-    title: "Error & Recovery",
-    subtitle: "What happens when AI is wrong?",
+    title: "Consistency & Predictability",
+    subtitle: "How do users navigate non-deterministic systems?",
     questions: [
-      { id: 41, text: "How does AI communicate \"I might be wrong about this\"?", detail: "Preemptive humility sets expectations. The prototype explores hedging language and visual uncertainty markers." },
-      { id: 42, text: "What's the escape hatch when AI takes an action the user didn't want?", detail: "Undo must be discoverable and reliable. This explores prominent reversal options and confirmation patterns." },
-      { id: 43, text: "How do you prevent cascading errors—AI wrong, user acts, more wrongness?", detail: "Errors can compound. The prototype explores checkpoints and validation steps that catch problems early." },
-      { id: 44, text: "What does graceful degradation look like when AI can't help?", detail: "AI won't always have answers. This explores fallback states that maintain usefulness without AI assistance." },
-      { id: 45, text: "How does user correction feed back into the system?", detail: "Feedback loops improve AI. The prototype explores how to make correction feel valuable rather than tedious." },
+      { id: 41, text: "What anchors stay fixed so users can orient themselves?", detail: "Navigation needs stable landmarks. The prototype identifies what must never change in an otherwise dynamic interface." },
+      { id: 42, text: "How do users build expectations when the interface keeps changing?", detail: "Predictability enables mastery. This explores patterns that help users anticipate system behavior despite variation." },
+      { id: 43, text: "What makes a product feel like itself when every screen is generated?", detail: "Brand identity transcends layout. The prototype explores voice, animation, and interaction patterns that define product character." },
+      { id: 44, text: "How do you maintain signature moments in dynamic UI?", detail: "Some moments matter for emotional connection. This explores how to preserve key experiences in generated interfaces." },
+      { id: 45, text: "How much variation is too much?", detail: "There's a threshold where change becomes chaos. The prototype tests where that line is for different types of content." },
     ]
   },
   {
     id: 10,
-    title: "Ethics & Boundaries",
-    subtitle: "What should AI never do?",
+    title: "Error & Recovery",
+    subtitle: "What happens when AI is wrong?",
     questions: [
-      { id: 46, text: "How do you show users AI is working for them, not manipulating them?", detail: "Trust requires alignment transparency. The prototype explores ways to demonstrate AI's motivations and constraints." },
-      { id: 47, text: "What visual cues communicate AI's boundaries and limitations?", detail: "Honest limitations build trust. This explores how to clearly show what AI can and cannot do." },
-      { id: 48, text: "How do you design for user dignity—feeling in control, not controlled?", detail: "Autonomy is fundamental. The prototype explores interaction patterns that respect user agency and intelligence." },
-      { id: 49, text: "How do you handle AI in vulnerable moments? (stress, confusion, high stakes)", detail: "Sensitive contexts need careful design. This explores how AI should behave when users are most vulnerable." },
-      { id: 50, text: "How does the user set hard boundaries AI must respect?", detail: "Some lines shouldn't be crossed. The prototype explores preference setting for non-negotiable limits." },
+      { id: 46, text: "How does AI communicate \"I might be wrong about this\"?", detail: "Preemptive humility sets expectations. The prototype explores hedging language and visual uncertainty markers." },
+      { id: 47, text: "What's the escape hatch when AI takes an action the user didn't want?", detail: "Undo must be discoverable and reliable. This explores prominent reversal options and confirmation patterns." },
+      { id: 48, text: "How do you prevent cascading errors—AI wrong, user acts, more wrongness?", detail: "Errors can compound. The prototype explores checkpoints and validation steps that catch problems early." },
+      { id: 49, text: "What does graceful degradation look like when AI can't help?", detail: "AI won't always have answers. This explores fallback states that maintain usefulness without AI assistance." },
+      { id: 50, text: "How does user correction feed back into the system?", detail: "Feedback loops improve AI. The prototype explores how to make correction feel valuable rather than tedious." },
     ]
   },
   {
     id: 11,
-    title: "Product Identity",
-    subtitle: "What makes a product a product?",
+    title: "Ethics & Boundaries",
+    subtitle: "What should AI never do?",
     questions: [
-      { id: 51, text: "Where does brand live when UI is generated?", detail: "Brand transcends pixels. The prototype explores how voice, values, and personality persist in dynamic interfaces." },
-      { id: 52, text: "How do micro-interactions and delight work in dynamic interfaces?", detail: "Delight is intentional. This explores how to maintain craft and surprise in AI-generated experiences." },
-      { id: 53, text: "What differentiates products when all use similar AI generation?", detail: "Commoditized AI needs differentiation. The prototype explores what makes products distinct beyond their intelligence." },
-      { id: 54, text: "How do you maintain personality in a system that adapts to everyone?", detail: "Personalization can dilute identity. This explores how products stay recognizable while adapting to individuals." },
-      { id: 55, text: "What's the signature of your product that never changes?", detail: "Some things define you. The prototype identifies the immutable core that persists through all variation." },
+      { id: 51, text: "How do you show users AI is working for them, not manipulating them?", detail: "Trust requires alignment transparency. The prototype explores ways to demonstrate AI's motivations and constraints." },
+      { id: 52, text: "What visual cues communicate AI's boundaries and limitations?", detail: "Honest limitations build trust. This explores how to clearly show what AI can and cannot do." },
+      { id: 53, text: "How do you design for user dignity—feeling in control, not controlled?", detail: "Autonomy is fundamental. The prototype explores interaction patterns that respect user agency and intelligence." },
+      { id: 54, text: "How do you handle AI in vulnerable moments? (stress, confusion, high stakes)", detail: "Sensitive contexts need careful design. This explores how AI should behave when users are most vulnerable." },
+      { id: 55, text: "How does the user set hard boundaries AI must respect?", detail: "Some lines shouldn't be crossed. The prototype explores preference setting for non-negotiable limits." },
     ]
   },
   {
     id: 12,
+    title: "Product Identity",
+    subtitle: "What makes a product a product?",
+    questions: [
+      { id: 56, text: "Where does brand live when UI is generated?", detail: "Brand transcends pixels. The prototype explores how voice, values, and personality persist in dynamic interfaces." },
+      { id: 57, text: "How do micro-interactions and delight work in dynamic interfaces?", detail: "Delight is intentional. This explores how to maintain craft and surprise in AI-generated experiences." },
+      { id: 58, text: "What differentiates products when all use similar AI generation?", detail: "Commoditized AI needs differentiation. The prototype explores what makes products distinct beyond their intelligence." },
+      { id: 59, text: "How do you maintain personality in a system that adapts to everyone?", detail: "Personalization can dilute identity. This explores how products stay recognizable while adapting to individuals." },
+      { id: 60, text: "What's the signature of your product that never changes?", detail: "Some things define you. The prototype identifies the immutable core that persists through all variation." },
+    ]
+  },
+  {
+    id: 13,
     title: "Designer's New Artifacts",
     subtitle: "What do we actually make now?",
     questions: [
-      { id: 56, text: "What replaces the Figma screen as the core deliverable?", detail: "Static mockups can't capture dynamic systems. The prototype explores new artifact types: rules, constraints, principles, and logic." },
-      { id: 57, text: "How do you prototype something that's never the same twice?", detail: "Non-deterministic systems need new prototyping methods. This explores range-based design and variation testing." },
-      { id: 58, text: "How do you hand off rules and logic instead of layouts?", detail: "Developer handoff evolves. The prototype explores specification formats for behavior rather than appearance." },
-      { id: 59, text: "How do you QA a non-deterministic system?", detail: "Testing dynamic systems is hard. This explores boundary testing, edge case catalogs, and quality metrics for AI behavior." },
-      { id: 60, text: "What does a design system look like for a system that designs itself?", detail: "Meta-design systems define how AI should compose. The prototype explores constraints, rules, and guardrails for generation." },
+      { id: 61, text: "What replaces the Figma screen as the core deliverable?", detail: "Static mockups can't capture dynamic systems. The prototype explores new artifact types: rules, constraints, principles, and logic." },
+      { id: 62, text: "How do you prototype something that's never the same twice?", detail: "Non-deterministic systems need new prototyping methods. This explores range-based design and variation testing." },
+      { id: 63, text: "How do you hand off rules and logic instead of layouts?", detail: "Developer handoff evolves. The prototype explores specification formats for behavior rather than appearance." },
+      { id: 64, text: "How do you QA a non-deterministic system?", detail: "Testing dynamic systems is hard. This explores boundary testing, edge case catalogs, and quality metrics for AI behavior." },
+      { id: 65, text: "What does a design system look like for a system that designs itself?", detail: "Meta-design systems define how AI should compose. The prototype explores constraints, rules, and guardrails for generation." },
     ]
   },
 ];
@@ -226,11 +238,11 @@ export function Page2Content({ selectedQuestionId }: { selectedQuestionId?: numb
     if (localSelectedId === id) {
       setLocalSelectedId(undefined);
       // Update URL without triggering navigation (prevents scroll jump)
-      window.history.pushState(null, '', '/questions');
+      window.history.pushState(null, '', '/the-shift');
     } else {
       setLocalSelectedId(id);
       // Update URL without triggering navigation (prevents scroll jump)
-      window.history.pushState(null, '', `/questions/${id}`);
+      window.history.pushState(null, '', `/the-shift/${id}`);
     }
   };
 
@@ -245,15 +257,15 @@ export function Page2Content({ selectedQuestionId }: { selectedQuestionId?: numb
               className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black font-bold mb-6"
               style={{ fontFamily: 'var(--font-bricolage)' }}
             >
-              Essential Questions for AI-First Design
+              Designing for AI changes everything. How we think, what we deliver, and what questions we ask.
             </h1>
 
             <div className="space-y-4">
               <p className="font-inter text-[14px] leading-[1.6] text-black/70">
-                60 prototypable questions for designers building AI-first products. Each question represents a design challenge that can be explored through prototypes.
+                We&apos;re moving from deterministic flows to adaptive systems. From handing off layouts to handing off logic. From predicting every state to designing for outcomes we can&apos;t fully control.
               </p>
               <p className="font-inter text-[14px] leading-[1.6] text-black/70">
-                Click any question to expand its description and load the prototype on the right.
+                This is my attempt to map the new territory. Questions that sit at the heart of AI-first design, explored through prototypes, product explorations, and new artifacts along the way.
               </p>
             </div>
           </header>

@@ -8,10 +8,10 @@ export function LoadingIndicator({ text = "Analyzing..." }: LoadingIndicatorProp
   return (
     <div className="flex items-center gap-2 text-black/50">
       {/* Animated dots */}
-      <div className="flex gap-1">
-        <div className="w-1.5 h-1.5 rounded-full bg-black/40 animate-loading-dot" style={{ animationDelay: '0ms' }} />
-        <div className="w-1.5 h-1.5 rounded-full bg-black/40 animate-loading-dot" style={{ animationDelay: '150ms' }} />
-        <div className="w-1.5 h-1.5 rounded-full bg-black/40 animate-loading-dot" style={{ animationDelay: '300ms' }} />
+      <div className="flex gap-[3px]">
+        <div className="w-1 h-1 rounded-full bg-black/40 animate-loading-dot" style={{ animationDelay: '0ms' }} />
+        <div className="w-1 h-1 rounded-full bg-black/40 animate-loading-dot" style={{ animationDelay: '150ms' }} />
+        <div className="w-1 h-1 rounded-full bg-black/40 animate-loading-dot" style={{ animationDelay: '300ms' }} />
       </div>
 
       {/* Loading text */}

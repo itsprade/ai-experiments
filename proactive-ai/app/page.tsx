@@ -3,6 +3,7 @@
 import { NoticingCard } from "@/components/NoticingCard";
 import { useNoticingTimeline, type NoticingState } from "@/hooks/useNoticingTimeline";
 import { getPageConfig } from "@/lib/pageContent";
+import { FloatingPreview } from "@/components/FloatingPreview";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -39,6 +40,11 @@ export default function Home() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showFullscreenButton, setShowFullscreenButton] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  const rightPanelRef = useRef<HTMLDivElement>(null);
+
+  // Mobile floating preview state
+  const [showFloatingPreview, setShowFloatingPreview] = useState(false);
+  const [userDismissedPreview, setUserDismissedPreview] = useState(false);
 
   // Mark as mounted after first render to enable animations
   useEffect(() => {
@@ -100,6 +106,46 @@ export default function Home() {
     window.addEventListener('resize', checkDesktop);
     return () => window.removeEventListener('resize', checkDesktop);
   }, []);
+
+  // Detect scroll and show floating preview on mobile
+  useEffect(() => {
+    if (isDesktop) return;
+
+    const handleScroll = () => {
+      // Check if the right panel is scrolled out of view
+      if (rightPanelRef.current) {
+        const rect = rightPanelRef.current.getBoundingClientRect();
+        // Show floating preview when right panel is mostly out of view
+        const isOutOfView = rect.bottom < 100;
+
+        // Reset dismissed state when scrolling back to top (panel visible again)
+        if (!isOutOfView && userDismissedPreview) {
+          setUserDismissedPreview(false);
+        }
+
+        // Only show if not dismissed
+        if (!userDismissedPreview) {
+          setShowFloatingPreview(isOutOfView);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isDesktop, userDismissedPreview]);
+
+  // Reset dismissed state when switching back to mobile
+  useEffect(() => {
+    if (isDesktop) {
+      setUserDismissedPreview(false);
+      setShowFloatingPreview(false);
+    }
+  }, [isDesktop]);
+
+  const handleCloseFloatingPreview = () => {
+    setShowFloatingPreview(false);
+    setUserDismissedPreview(true);
+  };
 
   // Fullscreen toggle handler
   const toggleFullscreen = () => {
@@ -203,29 +249,31 @@ export default function Home() {
             Introduction
           </a>
           <a
-            href="/questions"
+            href="/the-shift"
             className="hover:text-black/80 transition-colors font-light md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap"
           >
-            Questions
+            The Shift
           </a>
         </div>
       </div>
 
       {/* 🔽 Right Panel - Top on mobile, Right on desktop with resizable width */}
       <div
-        className="relative overflow-hidden order-1 md:order-2 h-[500px] md:h-full flex-shrink-0 group"
+        ref={rightPanelRef}
+        className="order-1 md:order-2 flex-shrink-0 p-6 md:p-0"
         style={{
           width: isDesktop ? `${100 - leftWidth}%` : '100%',
           minWidth: isDesktop ? '600px' : 'auto'
         }}
       >
-        {/* Gradient Background from Figma */}
-        <img
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          src="/gradient-bg.png"
-        />
-        <div className="absolute inset-0 backdrop-blur-[150px] bg-black/5" />
+        <div className="relative overflow-hidden h-[450px] md:h-full rounded-3xl md:rounded-none squircle-mobile group bg-white">
+          {/* Gradient Background from Figma */}
+          <img
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-110 blur-[80px]"
+            src="/gradient-bg.png"
+          />
+          <div className="absolute inset-0 bg-black/5" />
 
         {/* 🔽 Fullscreen Button - Top Right (hidden on mobile) */}
         <button
@@ -254,6 +302,7 @@ export default function Home() {
                 // Only animate on card entry (when a new card is added to stack)
                 // Cards should not animate when insight lines update within them
                 const isNewCard = index === cardStack.length - 1;
+                const isOldCard = index < cardStack.length - 1;
 
                 // Calculate opacity: newest card = 1, older cards = 0.5
                 const opacity = index === cardStack.length - 1 ? 1 : 0.5;
@@ -265,11 +314,16 @@ export default function Home() {
                 return (
                   <motion.div
                     key={`card-${card.id}`}
-                    layout={hasMounted}
-                    initial={hasMounted && isNewCard ? { y: 0, opacity: 0 } : false}
-                    animate={{ y: 0, opacity }}
+                    layout
+                    initial={hasMounted && isNewCard && cardStack.length > 1 ? { opacity: 0 } : false}
+                    animate={{ opacity }}
                     transition={{
-                      layout: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+                      layout: {
+                        duration: 0.6,
+                        ease: [0.22, 1, 0.36, 1],
+                        // Old cards should animate their position change immediately
+                        delay: isOldCard ? 0 : appearDelay
+                      },
                       opacity: { duration: hasMounted ? 0.8 : 0, delay: appearDelay }
                     }}
                   >
@@ -350,7 +404,44 @@ export default function Home() {
             <span className="opacity-50 text-xs hidden md:inline">R</span>
           </button>
         </div>
+        </div>
       </div>
+
+      {/* 🔽 Floating Preview for Mobile */}
+      {!isDesktop && (
+        <FloatingPreview
+          isVisible={showFloatingPreview}
+          onClose={handleCloseFloatingPreview}
+        >
+          <div className="relative w-full h-full">
+            {/* Gradient Background */}
+            <img
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-110 blur-[80px]"
+              src="/gradient-bg.png"
+            />
+            <div className="absolute inset-0 bg-black/5" />
+
+            {/* Card Stack aligned to top */}
+            <div className="relative h-full flex items-start justify-center pt-16">
+              <div className="flex flex-col-reverse items-center gap-[10px]">
+                {cardStack.map((card, index) => {
+                  const opacity = index === cardStack.length - 1 ? 1 : 0.5;
+                  return (
+                    <div key={`preview-card-${card.id}`} style={{ opacity }}>
+                      <NoticingCard
+                        currentState={card}
+                        currentStateIndex={card.id}
+                        isTransitioning={false}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </FloatingPreview>
+      )}
 
       {/* 🔽 Resize Handle - Absolutely positioned at the boundary between panels */}
       {isDesktop && (

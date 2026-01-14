@@ -6,6 +6,7 @@ import { SunIcon } from "@/components/icons/SunIcon";
 import { CalendarIcon } from "@/components/icons/CalendarIcon";
 import { SleepIcon } from "@/components/icons/SleepIcon";
 import type { NoticingState } from "@/hooks/useNoticingTimeline";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NoticingCardProps {
   currentState: NoticingState;
@@ -20,7 +21,7 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
   // 🔽 Greeting Card (Screen 1)
   if (currentState.type === 'greeting') {
     return (
-      <Card className="relative w-[432px] min-h-[250px] rounded-[20px] bg-white p-7">
+      <Card className="relative w-[432px] min-h-[250px] rounded-[20px] bg-white p-7 squircle">
         {/* Sun icon - top right */}
         <div className="absolute right-7 top-[33px]">
           <SunIcon />
@@ -50,7 +51,7 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
   // 🔽 Dark Card (State 6 - rendered separately in stack)
   if (isStacked && currentState.stackedDarkCard) {
     return (
-      <Card className="w-[432px] min-h-[170px] rounded-[20px] bg-black p-7">
+      <Card className="w-[432px] min-h-[170px] rounded-[20px] bg-black p-7 squircle">
         {/* Text container */}
         <div className="flex flex-col gap-1 mb-[32px]">
           {/* Header */}
@@ -89,9 +90,13 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
   }
 
   // 🔽 Notice/Insight Cards (Screens 2-5)
+  // Use fixed height to prevent layout shifts when content changes
+  const hasInsights = currentState.insightLines && currentState.insightLines.length > 0;
+  const hasAnimatedContent = isLoading || hasInsights;
+
   return (
-    <Card className="relative w-[432px] min-h-[250px] rounded-[20px] bg-white p-7">
-      {/* Header and Subheader Container */}
+    <Card className="relative w-[432px] h-[300px] rounded-[20px] bg-white p-7 overflow-hidden flex flex-col squircle">
+      {/* Header and Subheader Container - Fixed at top */}
       <div className="flex flex-col gap-[2px] mb-[72px]">
         {/* Header */}
         <p className="text-[14px] font-inter text-black/50 leading-[18px]">
@@ -107,36 +112,56 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
         )}
       </div>
 
-      {/* Bottom section: Body text + Insight lines + Loading */}
-      <div className="flex flex-col gap-6">
-        {/* Body text */}
+      {/* Bottom section: Body text + animated content below it */}
+      <div className="mt-auto flex flex-col gap-3">
+        {/* Body text - stays at top of this section */}
         <p className="text-[24px] font-inter font-semibold text-black leading-[26px] w-[301px]">
           {currentState.bodyText}
         </p>
 
-        {/* Insight lines */}
-        {currentState.insightLines && currentState.insightLines.length > 0 && (
-          <div className="space-y-[6px]">
-            {currentState.insightLines.map((insight, idx) => (
-              <div key={idx} className="flex items-center gap-[7px]">
-                {insight.icon === 'calendar' ? (
-                  <CalendarIcon className="text-black/80 shrink-0" />
-                ) : (
-                  <SleepIcon className="text-black/80 shrink-0" />
-                )}
-                <p className="text-sm font-inter text-black/50">
-                  {insight.text}
-                </p>
-                <p className="text-sm font-inter text-black/50">→</p>
+        {/* Container for animated content (loading/insights) - appears below body text */}
+        {hasAnimatedContent && (
+          <div className="flex flex-col gap-2">
+            {/* Insight lines - persist even during loading */}
+            {hasInsights && (
+              <div className="space-y-[6px]">
+                {currentState.insightLines!.map((insight, idx) => (
+                  <motion.div
+                    key={`insight-${idx}-${insight.text}`}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: idx * 0.15 }}
+                    className="flex items-center gap-[7px]"
+                  >
+                    {insight.icon === 'calendar' ? (
+                      <CalendarIcon className="text-black/80 shrink-0" />
+                    ) : (
+                      <SleepIcon className="text-black/80 shrink-0" />
+                    )}
+                    <p className="text-sm font-inter text-black/50">
+                      {insight.text}
+                    </p>
+                    <p className="text-sm font-inter text-black/50">→</p>
+                  </motion.div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
+            )}
 
-        {/* Loading Indicator */}
-        {isLoading && currentState.loadingText && (
-          <div className="animate-fade-in">
-            <LoadingIndicator text={currentState.loadingText} />
+            {/* Loading Indicator - appears below existing insights */}
+            <AnimatePresence>
+              {isLoading && currentState.loadingText && (
+                <motion.div
+                  key="loading"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <LoadingIndicator text={currentState.loadingText} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )}
       </div>
