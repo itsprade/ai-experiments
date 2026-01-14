@@ -3,7 +3,7 @@
 export function Page1Content() {
   return (
     <div className="h-full bg-white overflow-y-auto">
-      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-16 md:py-20 lg:py-24">
+      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-80 md:pb-20 md:pt-20 lg:py-24">
         <article className="max-w-[640px] mx-auto md:mx-0">
 
           {/* 🔽 Hero Section */}
@@ -267,12 +267,25 @@ export function Page1Content() {
             </a>
           </section>
 
-          {/* 🔽 Next Up */}
+          {/* 🔽 Continue Reading Link */}
           <footer className="pt-8 border-t border-black/[0.06]">
-            <p className="font-inter text-[13px] leading-[1.5] text-black/40">
-              <span className="text-black/60 font-medium">Next up:</span>{' '}
-              <span className="text-black/50 italic">How do we build trust in non-deterministic systems?</span>
-            </p>
+            <a
+              href="/the-shift"
+              className="group flex items-center gap-3 font-inter text-[14px] leading-[1.5] text-black/70 hover:text-black transition-colors"
+            >
+              <span>Explore the questions this raises</span>
+              <svg
+                className="w-4 h-4 text-black/40 group-hover:text-black group-hover:translate-x-1 transition-all"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
           </footer>
         </article>
       </div>

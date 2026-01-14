@@ -7,6 +7,7 @@ interface Question {
   id: number;
   text: string;
   detail: string;
+  enabled?: boolean; // Questions without enabled flag are disabled by default
 }
 
 interface Category {
@@ -181,25 +182,48 @@ export { categories };
 export type { Question, Category };
 
 // Expandable Question Component with single-selection and selected state styling
+// Questions appear disabled (low opacity) by default until enabled
 function ExpandableQuestion({ question, isSelected, onSelect }: {
   question: Question;
   isSelected: boolean;
   onSelect: () => void;
 }) {
+  const isEnabled = question.enabled === true;
+
+  // Enabled questions have full opacity, disabled questions are muted
+  const numberClasses = isEnabled
+    ? (isSelected ? 'text-black' : 'text-black/30')
+    : (isSelected ? 'text-black/40' : 'text-black/20');
+
+  const textClasses = isEnabled
+    ? (isSelected ? 'text-black' : 'text-black/70 group-hover:text-black/90')
+    : (isSelected ? 'text-black/50' : 'text-black/30 group-hover:text-black/40');
+
+  const chevronClasses = isEnabled
+    ? (isSelected ? 'rotate-180 text-black' : 'text-black/30')
+    : (isSelected ? 'rotate-180 text-black/40' : 'text-black/20');
+
+  const borderClasses = isEnabled
+    ? (isSelected ? 'border-black' : 'border-black/[0.06]')
+    : (isSelected ? 'border-black/30' : 'border-black/4');
+
+  const detailClasses = isEnabled ? 'text-black/60' : 'text-black/30';
+
   return (
-    <div className={`border-b transition-colors duration-200 ${isSelected ? 'border-black' : 'border-black/[0.06]'} last:border-b-0`}>
+    <div className={`border-b transition-colors duration-200 ${borderClasses} last:border-b-0`}>
       <button
-        onClick={onSelect}
-        className="w-full text-left py-4 flex items-start gap-3 group"
+        onClick={isEnabled ? onSelect : undefined}
+        disabled={!isEnabled}
+        className={`w-full text-left py-4 flex items-start gap-3 group ${!isEnabled ? 'cursor-default' : ''}`}
       >
-        <span className={`font-inter text-[12px] mt-0.5 w-5 flex-shrink-0 transition-colors duration-200 ${isSelected ? 'text-black' : 'text-black/30'}`}>
+        <span className={`font-inter text-[12px] mt-0.5 w-5 flex-shrink-0 transition-colors duration-200 ${numberClasses}`}>
           {question.id}.
         </span>
-        <span className={`font-inter text-[14px] leading-[1.6] flex-1 transition-colors duration-200 ${isSelected ? 'text-black' : 'text-black/70 group-hover:text-black/90'}`}>
+        <span className={`font-inter text-[14px] leading-[1.6] flex-1 transition-colors duration-200 ${textClasses}`}>
           {question.text}
         </span>
         <svg
-          className={`w-4 h-4 flex-shrink-0 mt-1 transition-all duration-300 ease-out ${isSelected ? 'rotate-180 text-black' : 'text-black/30'}`}
+          className={`w-4 h-4 flex-shrink-0 mt-1 transition-all duration-300 ease-out ${chevronClasses}`}
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -215,7 +239,7 @@ function ExpandableQuestion({ question, isSelected, onSelect }: {
           isSelected ? 'max-h-40 opacity-100 pb-4' : 'max-h-0 opacity-0'
         }`}
       >
-        <p className="font-inter text-[14px] leading-[1.6] text-black/60 pl-8 pr-8">
+        <p className={`font-inter text-[14px] leading-[1.6] ${detailClasses} pl-8 pr-8`}>
           {question.detail}
         </p>
       </div>
@@ -224,32 +248,45 @@ function ExpandableQuestion({ question, isSelected, onSelect }: {
 }
 
 // Main Page2Content Component
-export function Page2Content({ selectedQuestionId }: { selectedQuestionId?: number }) {
+interface Page2ContentProps {
+  selectedQuestionId?: number;
+  onQuestionSelect?: (id: number | undefined) => void;
+}
+
+export function Page2Content({ selectedQuestionId, onQuestionSelect }: Page2ContentProps) {
   // Local state for immediate UI updates (enables smooth animations)
   const [localSelectedId, setLocalSelectedId] = useState<number | undefined>(selectedQuestionId);
 
-  // Sync local state with URL-based prop when it changes
+  // Sync local state with prop when it changes
   useEffect(() => {
     setLocalSelectedId(selectedQuestionId);
   }, [selectedQuestionId]);
 
   const handleSelectQuestion = (id: number) => {
     // Update local state immediately for smooth animation
-    if (localSelectedId === id) {
-      setLocalSelectedId(undefined);
-      // Update URL without triggering navigation (prevents scroll jump)
+    const newId = localSelectedId === id ? undefined : id;
+    setLocalSelectedId(newId);
+
+    // Notify parent component if callback is provided
+    if (onQuestionSelect) {
+      onQuestionSelect(newId);
+    }
+
+    // Update URL without triggering navigation (prevents scroll jump)
+    if (newId === undefined) {
       window.history.pushState(null, '', '/the-shift');
     } else {
-      setLocalSelectedId(id);
-      // Update URL without triggering navigation (prevents scroll jump)
-      window.history.pushState(null, '', `/the-shift/${id}`);
+      window.history.pushState(null, '', `/the-shift/${newId}`);
     }
   };
 
+  // Check if panel is open (a question is selected)
+  const isPanelOpen = localSelectedId !== undefined;
+
   return (
     <div className="h-full bg-white overflow-y-auto">
-      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-16 md:py-20 lg:py-24">
-        <article className="max-w-[640px] mx-auto md:mx-0">
+      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-80 md:pb-20 md:pt-20 lg:py-24">
+        <article className={`max-w-[640px] transition-all duration-500 ease-out ${isPanelOpen ? 'mx-auto md:mx-0' : 'mx-auto'}`}>
 
           {/* Hero Section */}
           <header className="mb-16 md:mb-20">
@@ -273,12 +310,20 @@ export function Page2Content({ selectedQuestionId }: { selectedQuestionId?: numb
           {/* Question Categories */}
           {categories.map((category) => (
             <section key={category.id} className="mb-14 md:mb-16">
-              <h2
-                className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold mb-2"
-                style={{ fontFamily: 'var(--font-bricolage)' }}
-              >
-                {category.title}
-              </h2>
+              <div className="flex items-center justify-between mb-2">
+                <h2
+                  className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold"
+                  style={{ fontFamily: 'var(--font-bricolage)' }}
+                >
+                  {category.title}
+                </h2>
+                <span
+                  className="text-[10px] uppercase leading-none tracking-[0.08em] text-black/20 font-semibold"
+                  style={{ fontFamily: 'var(--font-bricolage)' }}
+                >
+                  Coming soon
+                </span>
+              </div>
               <p className="font-inter text-[13px] text-black/50 italic mb-6">
                 {category.subtitle}
               </p>
@@ -299,11 +344,15 @@ export function Page2Content({ selectedQuestionId }: { selectedQuestionId?: numb
           {/* Two Fundamental Questions */}
           <section className="mb-14 md:mb-16">
             <h2
-              className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold mb-8"
+              className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold mb-4"
               style={{ fontFamily: 'var(--font-bricolage)' }}
             >
               The Two Fundamental Questions
             </h2>
+
+            <p className="font-inter text-[14px] leading-[1.6] text-black/70 mb-8">
+              This is my attempt to map the new territory. These are the two high-level questions I&apos;m exploring. Each one branches into specific design challenges, prototypes, and new ways of thinking about our craft.
+            </p>
 
             <div className="space-y-8">
               <div className="border-l-2 border-black pl-4">
@@ -330,10 +379,6 @@ export function Page2Content({ selectedQuestionId }: { selectedQuestionId?: numb
                 </p>
               </div>
             </div>
-
-            <p className="font-inter text-[14px] leading-[1.6] text-black/70 mt-8 italic">
-              Each question above is a prototype waiting to be built.
-            </p>
           </section>
 
           {/* Footer */}

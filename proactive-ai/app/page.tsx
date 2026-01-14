@@ -232,7 +232,7 @@ export default function Home() {
     >
       {/* 🔽 Left Panel - Bottom on mobile, Left on desktop with resizable width */}
       <div
-        className="order-2 md:order-1 md:h-full relative md:overflow-hidden"
+        className="order-2 min-h-screen md:min-h-0 md:order-1 md:h-full relative md:overflow-hidden"
         style={{
           width: isDesktop ? `${leftWidth}%` : '100%',
           minWidth: isDesktop ? '600px' : 'auto'
@@ -240,8 +240,20 @@ export default function Home() {
       >
         <LeftPanelComponent />
 
-        {/* 🔽 Page Navigation - Vertical rotated text on top-left */}
-        <div className="absolute top-8 left-6 md:top-8 md:left-5 flex flex-row md:flex-col gap-4 md:gap-[26px] text-black/40 font-mono text-xs uppercase tracking-wider z-20">
+        {/* 🔽 Page Navigation - Desktop: vertical on left, Mobile: horizontal on top */}
+        <div className="absolute top-8 left-6 md:left-5 flex flex-row md:flex-col gap-4 md:gap-[26px] text-black/40 font-mono text-xs uppercase tracking-wider z-20">
+          <a
+            href="https://itsprade.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-black/80 transition-colors"
+            aria-label="Home"
+          >
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </a>
           <a
             href="/"
             className="hover:text-black/80 transition-colors text-black font-normal md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap"
@@ -254,7 +266,30 @@ export default function Home() {
           >
             The Shift
           </a>
+          <a
+            href="https://x.com/itsprade"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden md:block hover:text-black/80 transition-colors"
+            aria-label="Twitter"
+          >
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
         </div>
+        {/* 🔽 Mobile Navigation - X icon on right */}
+        <a
+          href="https://x.com/itsprade"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-8 right-6 md:hidden text-black/40 hover:text-black/80 transition-colors z-20"
+          aria-label="Twitter"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
       </div>
 
       {/* 🔽 Right Panel - Top on mobile, Right on desktop with resizable width */}
@@ -413,14 +448,13 @@ export default function Home() {
           isVisible={showFloatingPreview}
           onClose={handleCloseFloatingPreview}
         >
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full bg-white">
             {/* Gradient Background */}
             <img
               alt=""
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-110 blur-[80px]"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none blur-[80px]"
               src="/gradient-bg.png"
             />
-            <div className="absolute inset-0 bg-black/5" />
 
             {/* Card Stack aligned to top */}
             <div className="relative h-full flex items-start justify-center pt-16">
