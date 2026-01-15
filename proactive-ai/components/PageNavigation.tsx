@@ -7,8 +7,8 @@ interface PageNavigationProps {
 export function PageNavigation({ activePage }: PageNavigationProps) {
   return (
     <>
-      {/* 🔽 Page Navigation - Desktop: vertical on left, Mobile: horizontal on top */}
-      <div className="absolute top-8 left-6 md:left-5 flex flex-row md:flex-col items-center gap-4 md:gap-[26px] text-black/40 font-mono text-xs uppercase tracking-wider z-20">
+      {/* 🔽 Page Navigation - Desktop: fixed vertical on left, Mobile: absolute horizontal on top */}
+      <div className="absolute md:fixed top-8 left-6 md:left-5 flex flex-row md:flex-col items-center gap-4 md:gap-[26px] text-black/40 font-mono text-xs uppercase tracking-wider z-20">
         <a
           href="https://itsprade.com/"
           className="hover:text-black/80"

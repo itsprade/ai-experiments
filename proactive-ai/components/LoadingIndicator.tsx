@@ -15,7 +15,7 @@ export function LoadingIndicator({ text = "Analyzing..." }: LoadingIndicatorProp
       </div>
 
       {/* Loading text */}
-      <p className="text-sm font-inter tracking-[-0.14px]">
+      <p className="text-sm tracking-[-0.14px]">
         {text}
       </p>
     </div>

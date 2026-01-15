@@ -30,18 +30,18 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
         {/* Greeting and Name Container */}
         <div className="flex flex-col gap-[2px] mb-[102px]">
           {/* Greeting */}
-          <p className="text-[14px] font-inter text-black/50 leading-[18px]">
+          <p className="text-[14px] text-black/50 leading-[18px]">
             {currentState.greetingText}
           </p>
 
           {/* User name */}
-          <p className="text-[18px] font-inter font-semibold text-black leading-[20px]">
+          <p className="text-[18px] font-semibold text-black leading-[20px]">
             {currentState.userName}
           </p>
         </div>
 
         {/* Body text */}
-        <p className="text-[24px] font-inter font-semibold text-black leading-[26px] w-[376px]">
+        <p className="text-[24px] font-semibold text-black leading-[26px] w-[376px]">
           {currentState.bodyText}
         </p>
       </Card>
@@ -55,12 +55,12 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
         {/* Text container */}
         <div className="flex flex-col gap-1 mb-[32px]">
           {/* Header */}
-          <p className="text-[14px] font-inter text-white/50 leading-[18px]">
+          <p className="text-[14px] text-white/50 leading-[18px]">
             {currentState.stackedDarkCard.headerText}
           </p>
 
           {/* Body text */}
-          <p className="text-[24px] font-inter font-semibold text-white leading-[26px] w-[301px]">
+          <p className="text-[24px] font-semibold text-white leading-[26px] w-[301px]">
             {currentState.stackedDarkCard.bodyText}
           </p>
         </div>
@@ -79,7 +79,7 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
               ) : (
                 <SleepIcon className="text-white" />
               )}
-              <span className="text-sm font-inter text-white">
+              <span className="text-sm text-white">
                 {action.label}
               </span>
             </button>
@@ -99,13 +99,13 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
       {/* Header and Subheader Container - Fixed at top */}
       <div className="flex flex-col gap-[2px] mb-[72px]">
         {/* Header */}
-        <p className="text-[14px] font-inter text-black/50 leading-[18px]">
+        <p className="text-[14px] text-black/50 leading-[18px]">
           {currentState.headerText}
         </p>
 
         {/* Subheader */}
         {currentState.subheaderText && (
-          <p className="text-[18px] font-inter font-semibold leading-[20px]">
+          <p className="text-[18px] font-semibold leading-[20px]">
             <span className="text-black">From Sanjana at </span>
             <span className="text-black/40">3:30PM</span>
           </p>
@@ -115,7 +115,7 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
       {/* Bottom section: Body text + animated content below it */}
       <div className="mt-auto flex flex-col gap-3">
         {/* Body text - stays at top of this section */}
-        <p className="text-[24px] font-inter font-semibold text-black leading-[26px] w-[301px]">
+        <p className="text-[24px] font-semibold text-black leading-[26px] w-[301px]">
           {currentState.bodyText}
         </p>
 
@@ -138,10 +138,10 @@ export function NoticingCard({ currentState, currentStateIndex, isTransitioning 
                     ) : (
                       <SleepIcon className="text-black/80 shrink-0" />
                     )}
-                    <p className="text-sm font-inter text-black/50">
+                    <p className="text-sm text-black/50">
                       {insight.text}
                     </p>
-                    <p className="text-sm font-inter text-black/50">→</p>
+                    <p className="text-sm text-black/50">→</p>
                   </motion.div>
                 ))}
               </div>
