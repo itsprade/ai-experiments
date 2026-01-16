@@ -6,7 +6,7 @@ import { PageNavigation } from "@/components/PageNavigation";
 import { NoticingCard } from "@/components/NoticingCard";
 import { useNoticingTimeline, type NoticingState } from "@/hooks/useNoticingTimeline";
 import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function TheShiftClient() {
   // Selected question state
@@ -27,12 +27,6 @@ export default function TheShiftClient() {
   const [cardStack, setCardStack] = useState<NoticingState[]>([currentState]);
   const isFirstRender = useRef(true);
   const [hasMounted, setHasMounted] = useState(false);
-  // Track if panel has completed its slide-in animation
-  const [panelReady, setPanelReady] = useState(false);
-  // Track if we've had at least one layout measurement cycle
-  const [layoutReady, setLayoutReady] = useState(false);
-  // Track previous card stack length to detect when new cards are added
-  const prevCardStackLength = useRef(1);
 
   // Mobile floating preview state
   const [userDismissedPreview, setUserDismissedPreview] = useState(false);
@@ -53,12 +47,8 @@ export default function TheShiftClient() {
   const rightPanelRef = useRef<HTMLDivElement>(null);
 
   // Mark as mounted after first render to enable animations
-  // Use a short delay to ensure React has fully committed the initial render
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setHasMounted(true);
-    }, 50);
-    return () => clearTimeout(timer);
+    setHasMounted(true);
   }, []);
 
   // Update card stack when state changes
@@ -130,36 +120,6 @@ export default function TheShiftClient() {
       setUserDismissedPreview(false);
     }
   }, [selectedQuestionId]);
-
-  // Set panelReady after the panel slide-in animation completes (500ms)
-  // This ensures card animations don't interfere with panel animations
-  useEffect(() => {
-    if (isPanelOpen && !panelReady) {
-      const timer = setTimeout(() => {
-        setPanelReady(true);
-      }, 550); // Slightly longer than the 500ms panel transition
-      return () => clearTimeout(timer);
-    }
-    // Reset panelReady when panel closes
-    if (!isPanelOpen) {
-      setPanelReady(false);
-      setLayoutReady(false);
-    }
-  }, [isPanelOpen, panelReady]);
-
-  // Enable layout animations after the first card addition completes
-  // This gives Framer Motion time to measure the initial positions
-  useEffect(() => {
-    // When card stack grows and we have more than 1 card, enable layout after a delay
-    if (cardStack.length > prevCardStackLength.current && cardStack.length > 1 && panelReady && !layoutReady) {
-      // Wait for the first card animation to complete before enabling layout
-      const timer = setTimeout(() => {
-        setLayoutReady(true);
-      }, 700); // After the entry animation completes
-      return () => clearTimeout(timer);
-    }
-    prevCardStackLength.current = cardStack.length;
-  }, [cardStack.length, panelReady, layoutReady]);
 
   const handleCloseFloatingPreview = () => {
     setUserDismissedPreview(true);
@@ -287,8 +247,7 @@ export default function TheShiftClient() {
       {/* Centered Card Stack */}
       <div className="relative h-full flex items-start md:items-center justify-center pt-16 md:pt-0">
         <div className="flex flex-col-reverse items-center gap-2.5 scale-[0.8] md:scale-100 origin-top md:origin-center">
-          <LayoutGroup>
-          <AnimatePresence initial={false} mode="popLayout">
+          <AnimatePresence initial={false}>
             {cardStack.map((card, index) => {
               // Only animate on card entry (when a new card is added to stack)
               // Cards should not animate when insight lines update within them
@@ -296,29 +255,26 @@ export default function TheShiftClient() {
               const isOldCard = index < cardStack.length - 1;
 
               // Calculate opacity: newest card = 1, older cards = 0.5
-              const targetOpacity = index === cardStack.length - 1 ? 1 : 0.5;
+              const opacity = index === cardStack.length - 1 ? 1 : 0.5;
 
-              // Calculate if this card should animate in
-              // New cards (2nd, 3rd, etc.) should fade in
-              const shouldAnimateEntry = isNewCard && cardStack.length > 1;
-              // Apply delay for entry animation
-              const animationDelay = shouldAnimateEntry ? (panelReady ? 0.4 : 0) : 0;
+              // New cards should appear after a delay: 400ms for 2nd card, 200ms for 3rd card
+              // Only apply animation after component has mounted to prevent flicker on page load
+              const appearDelay = hasMounted && isNewCard && cardStack.length > 1 ? 0.4 : 0;
 
               return (
                 <motion.div
                   key={`card-${card.id}`}
-                  layout={layoutReady}
-                  initial={shouldAnimateEntry ? { opacity: 0, y: 30, scale: 0.95 } : false}
-                  animate={{ opacity: targetOpacity, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20 }}
+                  layout
+                  initial={hasMounted && isNewCard && cardStack.length > 1 ? { opacity: 0 } : false}
+                  animate={{ opacity }}
                   transition={{
                     layout: {
                       duration: 0.6,
                       ease: [0.22, 1, 0.36, 1],
+                      // Old cards should animate their position change immediately
+                      delay: isOldCard ? 0 : appearDelay
                     },
-                    opacity: { duration: shouldAnimateEntry ? 0.6 : 0.3, delay: animationDelay },
-                    y: { duration: shouldAnimateEntry ? 0.6 : 0.3, delay: animationDelay, ease: [0.22, 1, 0.36, 1] },
-                    scale: { duration: shouldAnimateEntry ? 0.6 : 0.3, delay: animationDelay, ease: [0.22, 1, 0.36, 1] }
+                    opacity: { duration: hasMounted ? 0.8 : 0, delay: appearDelay }
                   }}
                 >
                   <NoticingCard
@@ -330,7 +286,6 @@ export default function TheShiftClient() {
               );
             })}
           </AnimatePresence>
-          </LayoutGroup>
         </div>
       </div>
 
