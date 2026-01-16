@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import TheShiftClient from './TheShiftClient';
 
 // Base URL for the site
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://proactive-ai.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://itsprade-ai-experiments.vercel.app';
 
 export const metadata: Metadata = {
   title: 'The Shift | Designing for AI',

@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import IntroductionClient from './IntroductionClient';
 
 // Base URL for the site
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://proactive-ai.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://itsprade-ai-experiments.vercel.app';
 
 export const metadata: Metadata = {
   title: 'Rewiring how designers think about software in the age of AI',

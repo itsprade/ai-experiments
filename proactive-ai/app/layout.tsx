@@ -15,7 +15,7 @@ const bricolageGrotesque = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://proactive-ai.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://itsprade-ai-experiments.vercel.app'),
   title: "Proactive AI System",
   description: "What should the system notice without being asked?",
 };

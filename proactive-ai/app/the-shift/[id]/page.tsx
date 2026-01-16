@@ -3,7 +3,7 @@ import { findQuestionMetaBySlug, findQuestionMetaById } from '@/lib/questions-da
 import QuestionPageClient from './QuestionPageClient';
 
 // Base URL for the site - update this for production
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://proactive-ai.vercel.app';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://itsprade-ai-experiments.vercel.app';
 
 interface PageProps {
   params: Promise<{ id: string }>;
