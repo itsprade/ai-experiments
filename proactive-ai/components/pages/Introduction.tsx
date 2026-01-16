@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
+import { TitleMotion } from '@/components/TitleMotion';
 
 // 🔽 Introduction - Designing Proactive AI Systems Essay
 
@@ -57,7 +58,7 @@ export function Introduction() {
               <button
                 ref={thumbnailRef}
                 onClick={handleOpenVideo}
-                className={`relative w-[160px] h-[90px] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-0 -rotate-4 group ${isVideoOpen ? 'invisible' : ''}`}
+                className={`relative w-[240px] h-[135px] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-0 -rotate-4 group ${isVideoOpen ? 'invisible' : ''}`}
                 aria-label="Watch video"
               >
                 {/* YouTube Thumbnail */}
@@ -80,11 +81,42 @@ export function Introduction() {
 
           {/* 🔽 Hero Section */}
           <header className="mb-6">
-            <h1
-              className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black dark:text-white font-bold mb-5"
-            >
-              Rewiring how designers think about software in the age of AI
-            </h1>
+            {/* Title with hover links */}
+            <div className="group/title relative w-fit mb-5">
+              {/* Hover links - positioned above, aligned to border edge */}
+              <div className="flex items-center gap-0 opacity-0 group-hover/title:opacity-100 transition-opacity duration-200 mb-3 justify-end -mr-3">
+                <a
+                  href="https://titlemotionlab.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 hover:text-black/70 dark:hover:text-white/70 transition-colors px-2.5 py-1.5 border border-dotted border-black/20 dark:border-white/20"
+                >
+                  <span>Playground</span>
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://github.com/AnirudhKonduru/title-motion-lab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 hover:text-black/70 dark:hover:text-white/70 transition-colors px-2.5 py-1.5 border border-dotted border-black/20 dark:border-white/20"
+                >
+                  <span>GitHub</span>
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </a>
+              </div>
+              {/* Title with dotted border - using negative margin to keep border outside */}
+              <div className="-m-3 p-3 border border-dotted border-transparent group-hover/title:border-black/20 dark:group-hover/title:border-white/20 transition-colors duration-200">
+                <h1
+                  className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black dark:text-white font-bold"
+                >
+                  <TitleMotion text="Rewiring how designers think about software in the age of AI" />
+                </h1>
+              </div>
+            </div>
 
             <div className="space-y-3">
               <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">
@@ -149,11 +181,21 @@ export function Introduction() {
           <footer className="pt-6 border-t border-black/[0.06] dark:border-white/[0.06]">
             <a
               href="/the-shift"
-              className="group flex items-center gap-3 text-[14px] leading-[1.5] text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
+              className="group flex items-center gap-3.5 p-4 rounded-xl bg-gradient-to-r from-neutral-100 to-neutral-50 dark:from-[#2a2a2a] dark:to-[#1f1f1f] border border-black/5 dark:border-white/10 hover:border-black/10 dark:hover:border-white/20 transition-all"
             >
-              <span>Explore the questions this raises</span>
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] font-medium text-black dark:text-white">
+                  The Shift
+                </p>
+                <p className="text-[12px] text-black/50 dark:text-white/50">
+                  Explore the questions this raises
+                </p>
+              </div>
+
+              {/* External Arrow Icon */}
               <svg
-                className="w-4 h-4 text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white group-hover:translate-x-1 transition-all"
+                className="w-5 h-5 text-black/30 dark:text-white/40 group-hover:text-black/50 dark:group-hover:text-white/60 group-hover:translate-x-0.5 transition-all flex-shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
