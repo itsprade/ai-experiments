@@ -129,6 +129,15 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-bricolage), system-ui, sans-serif;
   }
+  /* Orange text selection highlight */
+  ::selection {
+    background-color: #f97316;
+    color: white;
+  }
+  ::-moz-selection {
+    background-color: #f97316;
+    color: white;
+  }
 }
 
 /* Custom animations for Proactive AI prototype */

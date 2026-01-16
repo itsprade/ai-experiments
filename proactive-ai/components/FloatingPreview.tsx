@@ -9,16 +9,23 @@ interface FloatingPreviewProps {
 }
 
 export function FloatingPreview({ children, isVisible, onClose }: FloatingPreviewProps) {
-  // Position state - start at bottom right
-  const [position, setPosition] = useState({ x: 16, y: window.innerHeight - 200 - 16 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
-
   // Preview dimensions (40% scale = 0.4)
   const scale = 0.4;
   const previewWidth = 200;
   const previewHeight = 250;
+
+  // Position state - initialize with safe default, will be set properly in useEffect
+  const [position, setPosition] = useState({ x: 16, y: 500 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [hasMounted, setHasMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Set initial position after mount (avoids SSR hydration issues)
+  useEffect(() => {
+    setPosition({ x: 16, y: window.innerHeight - previewHeight - 16 });
+    setHasMounted(true);
+  }, []);
 
   // Handle touch/mouse start
   const handleDragStart = (clientX: number, clientY: number) => {

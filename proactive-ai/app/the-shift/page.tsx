@@ -213,14 +213,17 @@ export default function QuestionsPage() {
 
   // 🔽 Prototype Panel - animated card stack (same as Introduction page)
   const PrototypePanel = () => (
-    <div className="relative w-full h-full group">
+    <div className="relative w-full h-full group bg-white dark:bg-neutral-950">
       {/* Gradient Background */}
       <img
         alt=""
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-110 blur-[80px]"
-        src="/gradient-bg.png"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        src="/bg-1.png"
+        loading="eager"
+        fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-black/5" />
+      {/* Overlay layer with backdrop blur - white in light mode, black in dark mode */}
+      <div className="absolute inset-0 pointer-events-none backdrop-blur-[80px] bg-white/10 dark:bg-black/10" />
 
       {/* 🔽 Fullscreen Button - Top Right (hidden on mobile) */}
       <button
@@ -357,7 +360,7 @@ export default function QuestionsPage() {
   return (
     <div
       ref={containerRef}
-      className={`flex flex-col md:flex-row min-h-screen md:h-screen w-full relative overflow-hidden transition-colors duration-300 ${isPanelOpen ? 'bg-neutral-100' : 'bg-white'} ${isResizing ? 'cursor-col-resize select-none' : ''}`}
+      className={`flex flex-col md:flex-row min-h-screen md:h-screen w-full relative overflow-hidden transition-colors duration-300 ${isPanelOpen ? 'bg-neutral-100 dark:bg-neutral-950' : 'bg-white dark:bg-neutral-950'} ${isResizing ? 'cursor-col-resize select-none' : ''}`}
     >
       {/* 🔽 Left Panel - Full width when panel closed, resizable when open */}
       <div
@@ -404,13 +407,17 @@ export default function QuestionsPage() {
           isVisible={true}
           onClose={handleCloseFloatingPreview}
         >
-          <div className="relative w-full h-full bg-white">
+          <div className="relative w-full h-full bg-white dark:bg-neutral-950">
             {/* Gradient Background */}
             <img
               alt=""
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none blur-[80px]"
-              src="/gradient-bg.png"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              src="/bg-1.png"
+              loading="eager"
+              fetchPriority="high"
             />
+            {/* Overlay layer with backdrop blur - white in light mode, black in dark mode */}
+            <div className="absolute inset-0 pointer-events-none backdrop-blur-[80px] bg-white/10 dark:bg-black/10" />
 
             {/* Card Stack aligned to top - No controls */}
             <div className="relative h-full flex items-start justify-center pt-16">
@@ -436,17 +443,17 @@ export default function QuestionsPage() {
       {/* 🔽 Resize Handle - Only show when panel is open */}
       {isDesktop && isPanelOpen && (
         <div
-          className="absolute top-0 bottom-0 w-1 bg-transparent hover:bg-black/10 flex items-center justify-center group z-50 hidden md:flex transition-opacity duration-300"
+          className="absolute top-0 bottom-0 w-1 bg-transparent hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center group z-50 hidden md:flex transition-opacity duration-300"
           style={{ left: `${leftWidth}%` }}
           onMouseDown={() => setIsResizing(true)}
           onDoubleClick={() => setLeftWidth(50)}
         >
           {/* Expanded hover target area (20px total: 10px on each side) */}
           <div
-            className="absolute inset-y-0 -left-[10px] -right-[10px] cursor-col-resize group-hover:bg-black/5"
+            className="absolute inset-y-0 -left-[10px] -right-[10px] cursor-col-resize group-hover:bg-black/5 dark:group-hover:bg-white/5"
           />
           {/* Visual divider line */}
-          <div className="relative w-px h-full bg-transparent group-hover:bg-black/20" />
+          <div className="relative w-px h-full bg-transparent group-hover:bg-black/20 dark:group-hover:bg-white/20" />
         </div>
       )}
     </div>

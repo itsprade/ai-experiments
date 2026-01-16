@@ -35,84 +35,84 @@ const categories: Category[] = [
         richDetail: (
           <div className="space-y-8">
             {/* Introduction paragraph */}
-            <p className="text-[15px] leading-[1.7] text-black/70">
+            <p className="text-[15px] leading-[1.7] text-black/70 dark:text-white/70">
               Designing interfaces that respond to context requires rethinking how software works at a fundamental level. Instead of users navigating to information, the system needs to understand what matters in the moment and surface it proactively. This shift changes how interfaces are structured, when they appear, and what role they play.
             </p>
 
             {/* The Paradigm Shift content */}
             <div>
-              <p className="text-[11px] font-semibold text-black/40 uppercase tracking-[0.12em] mb-5">The Paradigm Shift</p>
+              <p className="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-[0.12em] mb-5">The Paradigm Shift</p>
               <div className="space-y-4">
-                <div className="border-l-2 border-black/10 pl-4 py-1">
-                  <p className="text-[10px] font-semibold text-black/35 uppercase tracking-[0.1em] mb-2">Today</p>
-                  <p className="text-[13px] leading-[1.6] text-black/55 flex items-center flex-wrap gap-x-2 gap-y-1.5">
+                <div className="border-l-2 border-black/10 dark:border-white/10 pl-4 py-1">
+                  <p className="text-[10px] font-semibold text-black/35 dark:text-white/35 uppercase tracking-[0.1em] mb-2">Today</p>
+                  <p className="text-[13px] leading-[1.6] text-black/55 dark:text-white/55 flex items-center flex-wrap gap-x-2 gap-y-1.5">
                     <span>User</span>
-                    <svg className="w-3 h-3 text-black/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/25 dark:text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Opens App</span>
-                    <svg className="w-3 h-3 text-black/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/25 dark:text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Navigates</span>
-                    <svg className="w-3 h-3 text-black/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/25 dark:text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Finds Data</span>
-                    <svg className="w-3 h-3 text-black/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/25 dark:text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Interprets</span>
-                    <svg className="w-3 h-3 text-black/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/25 dark:text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Decides</span>
-                    <svg className="w-3 h-3 text-black/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/25 dark:text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Acts</span>
                   </p>
                 </div>
 
-                <div className="border-l-2 border-black/80 pl-4 py-1">
-                  <p className="text-[10px] font-semibold text-black/35 uppercase tracking-[0.1em] mb-2">Tomorrow</p>
-                  <p className="text-[13px] leading-[1.6] text-black/75 flex items-center flex-wrap gap-x-2 gap-y-1.5">
+                <div className="border-l-2 border-black/80 dark:border-white/80 pl-4 py-1">
+                  <p className="text-[10px] font-semibold text-black/35 dark:text-white/35 uppercase tracking-[0.1em] mb-2">Tomorrow</p>
+                  <p className="text-[13px] leading-[1.6] text-black/75 dark:text-white/75 flex items-center flex-wrap gap-x-2 gap-y-1.5">
                     <span className="font-medium">AI Layer</span>
-                    <svg className="w-3 h-3 text-black/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/40 dark:text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Understands Context</span>
-                    <svg className="w-3 h-3 text-black/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/40 dark:text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Surfaces Insight</span>
-                    <svg className="w-3 h-3 text-black/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/40 dark:text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>User Confirms</span>
-                    <svg className="w-3 h-3 text-black/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg className="w-3 h-3 text-black/40 dark:text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     <span>Action Happens</span>
                   </p>
                 </div>
               </div>
             </div>
 
-            <p className="text-[15px] leading-[1.7] text-black/70">
-              The app "dissolves" into the background. The frontend becomes emergent, generated in the moment based on what matters <em className="text-black/90 not-italic font-medium">right now</em> for <em className="text-black/90 not-italic font-medium">this specific person</em>.
+            <p className="text-[15px] leading-[1.7] text-black/70 dark:text-white/70">
+              The app "dissolves" into the background. The frontend becomes emergent, generated in the moment based on what matters <em className="text-black/90 dark:text-white/90 not-italic font-medium">right now</em> for <em className="text-black/90 dark:text-white/90 not-italic font-medium">this specific person</em>.
             </p>
 
             {/* Three Capabilities */}
             <div className="pt-2">
-              <p className="text-[11px] font-semibold text-black/40 uppercase tracking-[0.12em] mb-5">Three capabilities make this possible</p>
+              <p className="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-[0.12em] mb-5">Three capabilities make this possible</p>
               <div className="space-y-5">
                 <div>
-                  <p className="text-[14px] font-semibold text-black/90 mb-1.5">1. Detecting change</p>
-                  <p className="text-[14px] leading-[1.65] text-black/55">The system notices meaningful shifts, not everything that changes. Designers define which signals matter.</p>
+                  <p className="text-[14px] font-semibold text-black/90 dark:text-white/90 mb-1.5">1. Detecting change</p>
+                  <p className="text-[14px] leading-[1.65] text-black/55 dark:text-white/55">The system notices meaningful shifts, not everything that changes. Designers define which signals matter.</p>
                 </div>
                 <div>
-                  <p className="text-[14px] font-semibold text-black/90 mb-1.5">2. Finding patterns</p>
-                  <p className="text-[14px] leading-[1.65] text-black/55">Raw data becomes insight when connected to history and outcomes. Patterns explain why something matters.</p>
+                  <p className="text-[14px] font-semibold text-black/90 dark:text-white/90 mb-1.5">2. Finding patterns</p>
+                  <p className="text-[14px] leading-[1.65] text-black/55 dark:text-white/55">Raw data becomes insight when connected to history and outcomes. Patterns explain why something matters.</p>
                 </div>
                 <div>
-                  <p className="text-[14px] font-semibold text-black/90 mb-1.5">3. Suggesting action</p>
-                  <p className="text-[14px] leading-[1.65] text-black/55">Insights must lead to action. The system proposes the right action, at the right moment, with the right urgency.</p>
+                  <p className="text-[14px] font-semibold text-black/90 dark:text-white/90 mb-1.5">3. Suggesting action</p>
+                  <p className="text-[14px] leading-[1.65] text-black/55 dark:text-white/55">Insights must lead to action. The system proposes the right action, at the right moment, with the right urgency.</p>
                 </div>
               </div>
             </div>
 
             {/* Designing rules, not screens */}
             <div className="pt-4">
-              <p className="text-[11px] font-semibold text-black/40 uppercase tracking-[0.12em] mb-5">Designing rules, not screens</p>
+              <p className="text-[11px] font-semibold text-black/40 dark:text-white/40 uppercase tracking-[0.12em] mb-5">Designing rules, not screens</p>
               <div className="space-y-4">
-                <p className="text-[15px] leading-[1.7] text-black/70">
+                <p className="text-[15px] leading-[1.7] text-black/70 dark:text-white/70">
                   We no longer design screens. We design the rules that shape system behavior.
                 </p>
-                <p className="text-[14px] leading-[1.65] text-black/55">
+                <p className="text-[14px] leading-[1.65] text-black/55 dark:text-white/55">
                   I&apos;ve been working on this template as a way to structure my own thinking around proactive AI systems. It&apos;s the framework I use to reason about what the system should notice, how it should interpret patterns, and when it should act.
                 </p>
-                <p className="text-[14px] leading-[1.65] text-black/55">
+                <p className="text-[14px] leading-[1.65] text-black/55 dark:text-white/55">
                   Use it to map detection triggers, define pattern logic, and document the actions your system should suggest. It&apos;s meant to help move from abstract ideas to concrete design decisions.
                 </p>
               </div>
@@ -122,7 +122,7 @@ const categories: Category[] = [
                 href="https://github.com/itsprade/ai-feature-spec-template"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3.5 p-4 mt-6 rounded-xl bg-gradient-to-r from-[#474747] to-[#1a1a1a] border border-white/10 hover:border-white/20 transition-all"
+                className="group flex items-center gap-3.5 p-4 mt-6 rounded-xl bg-gradient-to-r from-[#474747] to-[#1a1a1a] dark:from-[#3a3a3a] dark:to-[#252525] border border-white/10 hover:border-white/20 transition-all"
               >
                 {/* GitHub Icon */}
                 <svg
@@ -157,15 +157,15 @@ const categories: Category[] = [
                 </svg>
               </a>
 
-              <p className="text-[13px] leading-[1.6] text-black/45 mt-5 italic">
+              <p className="text-[13px] leading-[1.6] text-black/45 dark:text-white/45 mt-5 italic">
                 This is a starting point for thinking about interfaces as systems, not screens.
               </p>
             </div>
           </div>
         )
       },
-      { id: 2, slug: "adaptive-data-density", text: "How does the same data render differently based on context? (glance vs. deep dive)", detail: "Adaptive density serves different needs. A prototype might show the same data as a badge, card, or full detail view based on context.", enabled: true },
-      { id: 3, slug: "urgency-visual-weight", text: "How does urgency translate to visual weight?", detail: "Priority should be visible. The prototype establishes rules for how importance affects size, color, position, and motion.", enabled: true },
+      { id: 2, slug: "adaptive-data-density", text: "How does the same data render differently based on context? (glance vs. deep dive)", detail: "Adaptive density serves different needs. A prototype might show the same data as a badge, card, or full detail view based on context." },
+      { id: 3, slug: "urgency-visual-weight", text: "How does urgency translate to visual weight?", detail: "Priority should be visible. The prototype establishes rules for how importance affects size, color, position, and motion." },
       { id: 4, slug: "consistent-vs-flexible", text: "What stays consistent vs. what flexes in a dynamic interface?", detail: "Some anchors must remain stable. This explores what elements users rely on for orientation in changing interfaces." },
       { id: 5, slug: "user-override-ai", text: "How does the user correct AI when it chooses the wrong display?", detail: "Users know best sometimes. The prototype explores override mechanisms and preference learning." },
     ]
@@ -350,30 +350,32 @@ function ExpandableQuestion({ question, isSelected, onSelect, setRef }: {
 
   // Enabled questions have full opacity, disabled questions are muted
   const numberClasses = isEnabled
-    ? (isSelected ? 'text-black' : 'text-black/30')
-    : (isSelected ? 'text-black/40' : 'text-black/20');
+    ? (isSelected ? 'text-black dark:text-white' : 'text-black/30 dark:text-white/30')
+    : (isSelected ? 'text-black/40 dark:text-white/40' : 'text-black/20 dark:text-white/20');
 
   const textClasses = isEnabled
-    ? (isSelected ? 'text-[20px] font-semibold text-black' : 'text-[20px] font-semibold text-black/70 group-hover:text-black/90')
-    : (isSelected ? 'text-[20px] font-semibold text-black/50' : 'text-[20px] font-semibold text-black/30 group-hover:text-black/40');
+    ? (isSelected ? 'text-[20px] font-semibold text-black dark:text-white' : 'text-[20px] font-semibold text-black/70 dark:text-white/70 group-hover:text-black/90 dark:group-hover:text-white/90')
+    : (isSelected ? 'text-[20px] font-semibold text-black/50 dark:text-white/50' : 'text-[20px] font-semibold text-black/30 dark:text-white/30 group-hover:text-black/40 dark:group-hover:text-white/40');
 
   const chevronClasses = isEnabled
-    ? (isSelected ? 'rotate-180 text-black' : 'text-black/30')
-    : (isSelected ? 'rotate-180 text-black/40' : 'text-black/20');
+    ? (isSelected ? 'rotate-180 text-black dark:text-white' : 'text-black/30 dark:text-white/30')
+    : (isSelected ? 'rotate-180 text-black/40 dark:text-white/40' : 'text-black/20 dark:text-white/20');
 
-  const detailClasses = isEnabled ? 'text-black/60' : 'text-black/30';
+  const detailClasses = isEnabled ? 'text-black/60 dark:text-white/60' : 'text-black/30 dark:text-white/30';
 
-  // Box style: selected items get white background with rounded corners, no border
+  // Box style: selected and hovered items get white/dark background with rounded corners
+  // In light mode, add shadow for visibility against neutral-100 background
+  // In dark mode, use lighter shade (neutral-900) for selected state against neutral-950 background
   const containerClasses = isEnabled && isSelected
-    ? 'bg-white -mx-4 px-4 rounded-2xl'
-    : 'border-b border-black/[0.06] last:border-b-0';
+    ? 'bg-white dark:bg-neutral-900 -mx-6 px-6 rounded-2xl shadow-sm dark:shadow-none'
+    : '-mx-6 px-6 rounded-2xl hover:bg-black/[0.03] dark:hover:bg-white/5';
 
   return (
-    <div ref={setRef} className={`transition-all duration-200 scroll-mt-20 ${containerClasses}`}>
+    <div ref={setRef} className={`transition-all duration-200 scroll-mt-20 group/question ${containerClasses}`}>
       <button
         onClick={isEnabled ? onSelect : undefined}
         disabled={!isEnabled}
-        className={`w-full text-left py-4 flex items-start gap-4 group ${!isEnabled ? 'cursor-default' : ''}`}
+        className={`w-full text-left pb-4 flex items-start gap-2 group ${isSelected ? 'pt-7' : 'pt-4'} ${!isEnabled ? 'cursor-default' : ''}`}
       >
         <span className={`text-[12px] mt-0.5 w-5 flex-shrink-0 transition-colors duration-200 ${numberClasses}`}>
           {question.id}.
@@ -393,20 +395,30 @@ function ExpandableQuestion({ question, isSelected, onSelect, setRef }: {
           <path d="M6 9l6 6 6-6"/>
         </svg>
       </button>
+      {/* Coming soon text for disabled questions - shows on hover with height animation */}
+      {!isEnabled && (
+        <div className="overflow-hidden max-h-0 group-hover/question:max-h-8 opacity-0 group-hover/question:opacity-100 transition-all duration-300 ease-out -mt-2">
+          <span className="text-[12px] text-orange-500 pl-7 pb-4 block">
+            Coming soon
+          </span>
+        </div>
+      )}
       <div
         className={`overflow-hidden transition-all duration-300 ease-out ${
-          isSelected ? (question.richDetail ? 'max-h-[1600px]' : 'max-h-40') + ' opacity-100 pb-4' : 'max-h-0 opacity-0'
+          isSelected ? (question.richDetail ? 'max-h-[1600px]' : 'max-h-40') + ' opacity-100 pb-7' : 'max-h-0 opacity-0'
         }`}
       >
-        {question.richDetail ? (
-          <div className="pl-8 pr-4">
-            {question.richDetail}
-          </div>
-        ) : (
-          <p className={`text-[14px] leading-[1.6] ${detailClasses} pl-8 pr-4`}>
-            {question.detail}
-          </p>
-        )}
+        <div className="flex">
+          {question.richDetail ? (
+            <div className="pl-8 pr-4">
+              {question.richDetail}
+            </div>
+          ) : (
+            <p className={`text-[14px] leading-[1.6] ${detailClasses} pl-8 pr-4`}>
+              {question.detail}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -419,21 +431,37 @@ interface TheShiftProps {
 }
 
 export function TheShift({ selectedQuestionId, onQuestionSelect }: TheShiftProps) {
-  // Local state for immediate UI updates (enables smooth animations)
-  const [localSelectedId, setLocalSelectedId] = useState<number | undefined>(selectedQuestionId);
-
   // Refs for each question element to enable scroll-to-top
   const questionRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+  const hasScrolledOnMount = useRef(false);
 
-  // Sync local state with prop when it changes
+  // Auto-scroll to selected question on initial mount (for direct URL access on mobile)
   useEffect(() => {
-    setLocalSelectedId(selectedQuestionId);
+    if (hasScrolledOnMount.current) return;
+    if (selectedQuestionId === undefined) return;
+
+    // Only auto-scroll on mobile
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) return;
+
+    // Wait for refs to be populated and DOM to be ready
+    const scrollTimeout = setTimeout(() => {
+      const questionElement = questionRefs.current.get(selectedQuestionId);
+      if (questionElement) {
+        questionElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        hasScrolledOnMount.current = true;
+      }
+    }, 100);
+
+    return () => clearTimeout(scrollTimeout);
   }, [selectedQuestionId]);
 
   const handleSelectQuestion = (id: number) => {
-    // Update local state immediately for smooth animation
-    const newId = localSelectedId === id ? undefined : id;
-    setLocalSelectedId(newId);
+    // Toggle: if clicking the same question, deselect it
+    const newId = selectedQuestionId === id ? undefined : id;
 
     // Notify parent component if callback is provided
     if (onQuestionSelect) {
@@ -478,26 +506,26 @@ export function TheShift({ selectedQuestionId, onQuestionSelect }: TheShiftProps
   };
 
   // Check if panel is open (a question is selected)
-  const isPanelOpen = localSelectedId !== undefined;
+  const isPanelOpen = selectedQuestionId !== undefined;
 
   return (
-    <div className={`h-full overflow-y-auto transition-colors duration-300 ${isPanelOpen ? 'bg-neutral-100' : 'bg-white'}`}>
-      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-80 md:pb-20 md:pt-20 lg:py-24">
-        <article className={`max-w-[640px] transition-all duration-500 ease-out ${isPanelOpen ? 'mx-auto md:mx-0' : 'mx-auto'}`}>
+    <div className={`h-full overflow-y-auto transition-colors duration-300 ${isPanelOpen ? 'bg-neutral-100 dark:bg-neutral-950' : 'bg-white dark:bg-neutral-950'}`}>
+      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-80 md:pb-20 md:pt-20 lg:py-24 flex justify-center">
+        <article className="w-full max-w-[640px]">
 
           {/* Hero Section */}
           <header className="mb-16 md:mb-20">
             <h1
-              className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black font-bold mb-6"
+              className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black dark:text-white font-bold mb-6"
                           >
               Designing for AI changes everything. How we think, what we deliver, and what questions we ask.
             </h1>
 
             <div className="space-y-4">
-              <p className="text-[14px] leading-[1.6] text-black/70">
+              <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">
                 We&apos;re moving from deterministic flows to adaptive systems. From handing off layouts to handing off logic. From predicting every state to designing for outcomes we can&apos;t fully control.
               </p>
-              <p className="text-[14px] leading-[1.6] text-black/70">
+              <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">
                 This is my attempt to map the new territory. Questions that sit at the heart of AI-first design, explored through prototypes, product explorations, and new artifacts along the way.
               </p>
             </div>
@@ -505,31 +533,31 @@ export function TheShift({ selectedQuestionId, onQuestionSelect }: TheShiftProps
 
           {/* Question Categories */}
           {categories.map((category) => (
-            <section key={category.id} className="mb-14 md:mb-16">
+            <section key={category.id} className="mb-14 md:mb-16 pb-14 md:pb-16 border-b border-black/[0.06] dark:border-white/[0.06] last:border-b-0">
               <div className="flex items-center justify-between mb-2">
                 <h2
-                  className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold"
+                  className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/80 dark:text-white/80 font-semibold"
                                   >
                   {category.title}
                 </h2>
                 {category.id !== 1 && (
                   <span
-                    className="text-[10px] uppercase leading-none tracking-[0.08em] text-black/20 font-semibold"
+                    className="text-[10px] uppercase leading-none tracking-[0.08em] text-black/20 dark:text-white/20 font-semibold"
                                     >
                     Coming soon
                   </span>
                 )}
               </div>
-              <p className="text-[13px] text-black/50 italic mb-6">
+              <p className="text-[13px] text-black/50 dark:text-white/50 italic mb-6">
                 {category.subtitle}
               </p>
 
-              <div className={category.questions.some(q => q.id === localSelectedId) ? '' : 'border-t border-black/[0.06]'}>
+              <div>
                 {category.questions.map((question) => (
                   <ExpandableQuestion
                     key={question.id}
                     question={question}
-                    isSelected={localSelectedId === question.id}
+                    isSelected={selectedQuestionId === question.id}
                     onSelect={() => handleSelectQuestion(question.id)}
                     setRef={(el) => {
                       if (el) questionRefs.current.set(question.id, el);
@@ -543,34 +571,34 @@ export function TheShift({ selectedQuestionId, onQuestionSelect }: TheShiftProps
           {/* Two Fundamental Questions */}
           <section className="mb-14 md:mb-16">
             <h2
-              className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold mb-4"
+              className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 dark:text-white/40 font-semibold mb-4"
                           >
               The Two Fundamental Questions
             </h2>
 
-            <p className="text-[14px] leading-[1.6] text-black/70 mb-8">
+            <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70 mb-8">
               This is my attempt to map the new territory. These are the two high-level questions I&apos;m exploring. Each one branches into specific design challenges, prototypes, and new ways of thinking about our craft.
             </p>
 
             <div className="space-y-8">
-              <div className="border-l-2 border-black pl-4">
+              <div className="border-l-2 border-black dark:border-white pl-4">
                 <h3
-                  className="text-[18px] md:text-[20px] leading-[1.2] tracking-[-0.01em] text-black font-semibold mb-3"
+                  className="text-[18px] md:text-[20px] leading-[1.2] tracking-[-0.01em] text-black dark:text-white font-semibold mb-3"
                                   >
                   How do we design for systems we can&apos;t fully predict?
                 </h3>
-                <p className="text-[14px] leading-[1.65] text-black/65">
+                <p className="text-[14px] leading-[1.65] text-black/65 dark:text-white/65">
                   We&apos;re moving from deterministic flows to adaptive systems. The same user, same context, might see different things each time. How do we build trust, consistency, and user agency when we can&apos;t control every outcome?
                 </p>
               </div>
 
-              <div className="border-l-2 border-black pl-4">
+              <div className="border-l-2 border-black dark:border-white pl-4">
                 <h3
-                  className="text-[18px] md:text-[20px] leading-[1.2] tracking-[-0.01em] text-black font-semibold mb-3"
+                  className="text-[18px] md:text-[20px] leading-[1.2] tracking-[-0.01em] text-black dark:text-white font-semibold mb-3"
                                   >
                   What do designers deliver when the interface designs itself?
                 </h3>
-                <p className="text-[14px] leading-[1.65] text-black/65">
+                <p className="text-[14px] leading-[1.65] text-black/65 dark:text-white/65">
                   If AI generates the UI, what replaces the Figma file? What are our new artifacts: rules, constraints, principles? How do we hand off logic instead of layouts?
                 </p>
               </div>
@@ -578,15 +606,15 @@ export function TheShift({ selectedQuestionId, onQuestionSelect }: TheShiftProps
           </section>
 
           {/* Footer */}
-          <footer className="pt-8 border-t border-black/[0.06]">
-            <div className="flex items-center justify-between font-mono text-xs uppercase tracking-wider text-black/40">
+          <footer className="pt-8 border-t border-black/[0.06] dark:border-white/[0.06]">
+            <div className="flex items-center justify-between font-mono text-xs uppercase tracking-wider text-black/40 dark:text-white/40">
               <p className="flex items-center gap-1">
                 <span>Built by</span>
                 <a
                   href="https://itsprade.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-black hover:text-black/80 transition-colors"
+                  className="text-black dark:text-white hover:text-black/80 dark:hover:text-white/80 transition-colors"
                 >
                   itsprade
                 </a>
@@ -602,7 +630,7 @@ export function TheShift({ selectedQuestionId, onQuestionSelect }: TheShiftProps
                   href="https://x.com/itsprade"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-black/80 transition-colors"
+                  className="hover:text-black/80 dark:hover:text-white/80 transition-colors"
                   aria-label="Twitter"
                 >
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">

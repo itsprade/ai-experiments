@@ -13,7 +13,7 @@ export default function QuestionDetailPage() {
   const params = useParams();
   // Support both slug-based URLs and legacy numeric IDs
   const idParam = params.id as string;
-  const questionId = (() => {
+  const initialQuestionId = (() => {
     // First, try to find by slug
     const questionBySlug = findQuestionBySlug(idParam);
     if (questionBySlug) return questionBySlug.id;
@@ -28,6 +28,16 @@ export default function QuestionDetailPage() {
     return undefined;
   })();
 
+  // Local state for selected question - initialized from URL, then managed locally
+  const [selectedQuestionId, setSelectedQuestionId] = useState<number | undefined>(initialQuestionId);
+  const isPanelOpen = selectedQuestionId !== undefined;
+
+  // Handle question selection - toggle behavior with URL update
+  const handleQuestionSelect = (id: number | undefined) => {
+    setSelectedQuestionId(id);
+    // URL is already updated by TheShift component via pushState
+  };
+
   const {
     currentState,
     currentStateIndex,
@@ -41,31 +51,19 @@ export default function QuestionDetailPage() {
   // Initialize with the greeting state to prevent animation on first render
   const [cardStack, setCardStack] = useState<NoticingState[]>([currentState]);
   const isFirstRender = useRef(true);
-  const [hasMounted, setHasMounted] = useState(false);
 
   // Resizable panels state
   const [leftWidth, setLeftWidth] = useState(50); // percentage
   const [isResizing, setIsResizing] = useState(false);
-  // Initialize isDesktop based on window width to prevent layout shift
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth >= 768;
-    }
-    return true; // Default to desktop to prevent flash
-  });
+  // Initialize with true (desktop) as safe default, will be updated in useEffect
+  const [isDesktop, setIsDesktop] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showFullscreenButton, setShowFullscreenButton] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
   const rightPanelRef = useRef<HTMLDivElement>(null);
 
-  // Mobile floating preview state
-  const [showFloatingPreview, setShowFloatingPreview] = useState(false);
+  // Mobile floating preview state - show immediately on mobile when question is selected
   const [userDismissedPreview, setUserDismissedPreview] = useState(false);
-
-  // Mark as mounted after first render to enable animations
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
   // Update card stack when state changes
   useEffect(() => {
@@ -123,43 +121,21 @@ export default function QuestionDetailPage() {
     return () => window.removeEventListener('resize', checkDesktop);
   }, []);
 
-  // Detect scroll and show floating preview on mobile
-  useEffect(() => {
-    if (isDesktop) return;
-
-    const handleScroll = () => {
-      // Check if the right panel is scrolled out of view
-      if (rightPanelRef.current) {
-        const rect = rightPanelRef.current.getBoundingClientRect();
-        // Show floating preview when right panel is mostly out of view
-        const isOutOfView = rect.bottom < 100;
-
-        // Reset dismissed state when scrolling back to top (panel visible again)
-        if (!isOutOfView && userDismissedPreview) {
-          setUserDismissedPreview(false);
-        }
-
-        // Only show if not dismissed
-        if (!userDismissedPreview) {
-          setShowFloatingPreview(isOutOfView);
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [isDesktop, userDismissedPreview]);
-
-  // Reset dismissed state when switching back to mobile
+  // Reset dismissed state when switching to desktop or when question changes
   useEffect(() => {
     if (isDesktop) {
       setUserDismissedPreview(false);
-      setShowFloatingPreview(false);
     }
   }, [isDesktop]);
 
+  // Reset dismissed state when a new question is selected
+  useEffect(() => {
+    if (selectedQuestionId !== undefined) {
+      setUserDismissedPreview(false);
+    }
+  }, [selectedQuestionId]);
+
   const handleCloseFloatingPreview = () => {
-    setShowFloatingPreview(false);
     setUserDismissedPreview(true);
   };
 
@@ -240,38 +216,49 @@ export default function QuestionDetailPage() {
   return (
     <div
       ref={containerRef}
-      className={`flex flex-col md:flex-row min-h-screen md:h-screen w-full relative ${isResizing ? 'cursor-col-resize select-none' : ''}`}
+      className={`flex flex-col md:flex-row min-h-screen md:h-screen w-full relative overflow-hidden transition-colors duration-300 ${isPanelOpen ? 'bg-neutral-100 dark:bg-neutral-950' : 'bg-white dark:bg-neutral-950'} ${isResizing ? 'cursor-col-resize select-none' : ''}`}
     >
-      {/* 🔽 Left Panel - Bottom on mobile, Left on desktop with resizable width */}
+      {/* 🔽 Left Panel - Full width when panel closed, resizable when open */}
       <div
-        className="order-2 min-h-screen md:min-h-0 md:order-1 md:h-full relative md:overflow-hidden"
+        className={`order-2 min-h-screen md:min-h-0 md:order-1 md:h-full relative md:overflow-hidden ${isResizing ? '' : 'transition-[width,min-width] duration-500 ease-out'}`}
         style={{
-          width: isDesktop ? `${leftWidth}%` : '100%',
-          minWidth: isDesktop ? '600px' : 'auto'
+          width: isDesktop
+            ? (isPanelOpen ? `${leftWidth}%` : '100%')
+            : '100%',
+          minWidth: isDesktop && isPanelOpen ? '600px' : 'auto'
         }}
       >
-        <TheShift selectedQuestionId={questionId} />
+        <TheShift selectedQuestionId={selectedQuestionId} onQuestionSelect={handleQuestionSelect} />
 
         <PageNavigation activePage="the-shift" />
       </div>
 
-      {/* 🔽 Right Panel - Top on mobile, Right on desktop with resizable width */}
-      <div
-        ref={rightPanelRef}
-        className="order-1 md:order-2 flex-shrink-0 p-6 md:p-0"
-        style={{
-          width: isDesktop ? `${100 - leftWidth}%` : '100%',
-          minWidth: isDesktop ? '600px' : 'auto'
-        }}
-      >
-        <div className="relative overflow-hidden h-[450px] md:h-full rounded-3xl md:rounded-none squircle-mobile group bg-white">
-          {/* Gradient Background from Figma */}
+      {/* 🔽 Right Panel - Slides in from right when question is selected (desktop only) */}
+      {isDesktop && (
+        <div
+          ref={rightPanelRef}
+          className={`order-2 shrink-0 md:p-0 ${isResizing ? '' : 'transition-[width,transform] duration-500 ease-out'}`}
+          style={{
+            width: `${100 - leftWidth}%`,
+            minWidth: '600px',
+            transform: isPanelOpen ? 'translateX(0)' : 'translateX(100%)',
+            position: !isPanelOpen ? 'absolute' : 'relative',
+            right: !isPanelOpen ? 0 : 'auto',
+            top: !isPanelOpen ? 0 : 'auto',
+            bottom: !isPanelOpen ? 0 : 'auto',
+          }}
+        >
+        <div className="relative overflow-hidden h-[450px] md:h-full rounded-3xl md:rounded-none squircle-mobile group bg-white dark:bg-neutral-950">
+          {/* Gradient Background - preload with eager loading */}
           <img
             alt=""
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none scale-110 blur-[80px]"
-            src="/gradient-bg.png"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            src="/bg-1.png"
+            loading="eager"
+            fetchPriority="high"
           />
-          <div className="absolute inset-0 bg-black/5" />
+          {/* Overlay layer with backdrop blur - white in light mode, black in dark mode */}
+          <div className="absolute inset-0 pointer-events-none backdrop-blur-[80px] bg-white/10 dark:bg-black/10" />
 
         {/* 🔽 Fullscreen Button - Top Right (hidden on mobile) */}
         <button
@@ -297,32 +284,21 @@ export default function QuestionDetailPage() {
           <div className="flex flex-col-reverse items-center gap-2.5 scale-[0.8] md:scale-100 origin-top md:origin-center">
             <AnimatePresence initial={false}>
               {cardStack.map((card, index) => {
-                // Only animate on card entry (when a new card is added to stack)
-                // Cards should not animate when insight lines update within them
-                const isNewCard = index === cardStack.length - 1;
-                const isOldCard = index < cardStack.length - 1;
-
                 // Calculate opacity: newest card = 1, older cards = 0.5
                 const opacity = index === cardStack.length - 1 ? 1 : 0.5;
-
-                // New cards should appear after a delay: 400ms for 2nd card, 200ms for 3rd card
-                // Only apply animation after component has mounted to prevent flicker on page load
-                const appearDelay = hasMounted && isNewCard && cardStack.length > 1 ? 0.4 : 0;
 
                 return (
                   <motion.div
                     key={`card-${card.id}`}
                     layout
-                    initial={hasMounted && isNewCard && cardStack.length > 1 ? { opacity: 0 } : false}
+                    initial={false}
                     animate={{ opacity }}
                     transition={{
                       layout: {
-                        duration: 0.6,
-                        ease: [0.22, 1, 0.36, 1],
-                        // Old cards should animate their position change immediately
-                        delay: isOldCard ? 0 : appearDelay
+                        duration: 0.3,
+                        ease: [0.22, 1, 0.36, 1]
                       },
-                      opacity: { duration: hasMounted ? 0.8 : 0, delay: appearDelay }
+                      opacity: { duration: 0.3 }
                     }}
                   >
                     <NoticingCard
@@ -404,20 +380,25 @@ export default function QuestionDetailPage() {
         </div>
         </div>
       </div>
+      )}
 
-      {/* 🔽 Floating Preview for Mobile */}
-      {!isDesktop && (
+      {/* 🔽 Floating Preview for Mobile - show immediately when question is selected */}
+      {!isDesktop && isPanelOpen && !userDismissedPreview && (
         <FloatingPreview
-          isVisible={showFloatingPreview}
+          isVisible={true}
           onClose={handleCloseFloatingPreview}
         >
-          <div className="relative w-full h-full bg-white">
-            {/* Gradient Background */}
+          <div className="relative w-full h-full bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900">
+            {/* Gradient Background - preload with eager loading */}
             <img
               alt=""
-              className="absolute inset-0 w-full h-full object-cover pointer-events-none blur-[80px]"
-              src="/gradient-bg.png"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              src="/bg-1.png"
+              loading="eager"
+              fetchPriority="high"
             />
+            {/* Overlay layer with backdrop blur - white in light mode, black in dark mode */}
+            <div className="absolute inset-0 pointer-events-none backdrop-blur-[80px] bg-white/10 dark:bg-black/10" />
 
             {/* Card Stack aligned to top */}
             <div className="relative h-full flex items-start justify-center pt-16">
@@ -440,20 +421,20 @@ export default function QuestionDetailPage() {
         </FloatingPreview>
       )}
 
-      {/* 🔽 Resize Handle - Absolutely positioned at the boundary between panels */}
-      {isDesktop && (
+      {/* 🔽 Resize Handle - Only show when panel is open */}
+      {isDesktop && isPanelOpen && (
         <div
-          className="absolute top-0 bottom-0 w-1 bg-transparent hover:bg-black/10 flex items-center justify-center group z-50 hidden md:flex"
+          className="absolute top-0 bottom-0 w-1 bg-transparent hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center group z-50 transition-opacity duration-300"
           style={{ left: `${leftWidth}%` }}
           onMouseDown={() => setIsResizing(true)}
           onDoubleClick={() => setLeftWidth(50)}
         >
           {/* Expanded hover target area (20px total: 10px on each side) */}
           <div
-            className="absolute inset-y-0 -left-[10px] -right-[10px] cursor-col-resize group-hover:bg-black/5"
+            className="absolute inset-y-0 -left-[10px] -right-[10px] cursor-col-resize group-hover:bg-black/5 dark:group-hover:bg-white/5"
           />
           {/* Visual divider line */}
-          <div className="relative w-px h-full bg-transparent group-hover:bg-black/20" />
+          <div className="relative w-px h-full bg-transparent group-hover:bg-black/20 dark:group-hover:bg-white/20" />
         </div>
       )}
     </div>

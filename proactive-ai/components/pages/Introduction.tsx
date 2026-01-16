@@ -36,188 +36,124 @@ export function Introduction() {
   };
 
   return (
-    <div className="h-full bg-white overflow-y-auto">
-      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-80 md:pb-20 md:pt-20 lg:py-24">
-        <article className="max-w-[640px] mx-auto md:mx-0">
+    <div className="h-full bg-white dark:bg-neutral-950 overflow-y-auto transition-colors duration-300">
+      <div className="px-6 md:px-16 lg:px-24 pt-24 pb-20 md:pt-20 lg:py-24 flex justify-center md:justify-start">
+        <article className="w-full max-w-[640px]">
+
+          {/* 🔽 Video Thumbnail */}
+          <div className="mb-6 pt-[64px]">
+            <div className="relative w-fit group/video overflow-visible">
+              {/* Blurred background glow - appears on hover */}
+              <div
+                className="absolute -inset-10 opacity-0 group-hover/video:opacity-100 transition-opacity duration-500 ease-out pointer-events-none"
+                style={{
+                  backgroundImage: `url(https://img.youtube.com/vi/${videoId}/mqdefault.jpg)`,
+                  backgroundSize: 'calc(100% - 80px) calc(100% - 80px)',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  filter: 'blur(40px) saturate(1.5)',
+                }}
+              />
+              <button
+                ref={thumbnailRef}
+                onClick={handleOpenVideo}
+                className={`relative w-[160px] h-[90px] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-0 -rotate-4 group ${isVideoOpen ? 'invisible' : ''}`}
+                aria-label="Watch video"
+              >
+                {/* YouTube Thumbnail */}
+                <img
+                  src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
+                  alt="Video thumbnail"
+                  className="w-full h-full object-cover"
+                />
+                {/* Play Button Overlay */}
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-black ml-0.5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
 
           {/* 🔽 Hero Section */}
-          <header className="mb-10 md:mb-12">
+          <header className="mb-6">
             <h1
-              className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black font-bold mb-6"
-                          >
+              className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black dark:text-white font-bold mb-5"
+            >
               Designing Proactive AI Systems
             </h1>
 
-            <div className="space-y-4">
-              <p className="text-[14px] leading-[1.6] text-black/70">
-                Traditional software waits. You open an app, navigate, search, request. The system responds.
+            <div className="space-y-3">
+              <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">
+                Software is fundamentally changing. As AI becomes a core part of how products work, systems are moving beyond predictable, deterministic interfaces toward behavior that adapts, reasons, and acts on its own.
               </p>
-              <p className="text-[14px] leading-[1.6] text-black/70">
-                AI changes this. An intelligent system observes, interprets, and initiates. It surfaces what matters before you ask.
+              <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">
+                Software is no longer just something we operate. It is starting to observe, decide, and participate in the experience itself.
               </p>
             </div>
           </header>
 
-          {/* 🔽 Video Thumbnail */}
-          <div className="mb-10 md:mb-12">
-            <button
-              ref={thumbnailRef}
-              onClick={handleOpenVideo}
-              className={`relative w-[160px] h-[90px] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-0 -rotate-4 group ${isVideoOpen ? 'invisible' : ''}`}
-              aria-label="Watch video"
-            >
-              {/* YouTube Thumbnail */}
-              <img
-                src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
-                alt="Video thumbnail"
-                className="w-full h-full object-cover"
-              />
-              {/* Play Button Overlay */}
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-black ml-0.5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-              </div>
-            </button>
-          </div>
-
-          {/* 🔽 Three Capabilities */}
-          <section className="mb-14 md:mb-16">
-            <h2
-              className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold mb-8"
-                          >
-              Three capabilities make this possible
-            </h2>
-
-            <div className="space-y-8">
-              {/* Detecting Change */}
-              <div>
-                <h3
-                  className="text-[18px] md:text-[20px] leading-[1.2] tracking-[-0.01em] text-black font-semibold mb-3"
-                                  >
-                  1. Detecting Change
-                </h3>
-                <p className="text-[14px] leading-[1.65] text-black/65">
-                  The system monitors for meaningful shifts: a schedule that&apos;s unusually packed, a metric crossing a threshold, a pattern breaking from the norm. Not everything that changes matters. The designer&apos;s job is to define <em className="not-italic text-black/80">which</em> changes are worth surfacing.
-                </p>
-              </div>
-
-              {/* Finding Patterns */}
-              <div>
-                <h3
-                  className="text-[18px] md:text-[20px] leading-[1.2] tracking-[-0.01em] text-black font-semibold mb-3"
-                                  >
-                  2. Finding Patterns
-                </h3>
-                <p className="text-[14px] leading-[1.65] text-black/65">
-                  Raw changes become insights when connected to history. &quot;You have 5 meetings&quot; is a fact. &quot;Days like this tend to be 35% less productive&quot; is a pattern. The system learns what combinations of signals predict outcomes the user cares about.
-                </p>
-              </div>
-
-              {/* Suggesting Action */}
-              <div>
-                <h3
-                  className="text-[18px] md:text-[20px] leading-[1.2] tracking-[-0.01em] text-black font-semibold mb-3"
-                                  >
-                  3. Suggesting Action
-                </h3>
-                <p className="text-[14px] leading-[1.65] text-black/65">
-                  Insights without action are noise. The system translates patterns into concrete next steps: reschedule a meeting, block focus time, reorder inventory. The right action, at the right moment, with the right urgency.
-                </p>
-              </div>
+          {/* 🔽 The Shift */}
+          <section className="mb-6">
+            <div className="space-y-3">
+              <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">
+                This shift changes how we think about design. It changes what an interface is, what an experience means, and what it actually means to design software.
+              </p>
+              <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">
+                Designing for AI-first systems is less about arranging screens and flows, and more about shaping behavior, intent, and decision-making inside the system.
+              </p>
             </div>
           </section>
 
-          {/* 🔽 The Designer's New Job */}
-          <section className="mb-14 md:mb-16">
-            <h2
-              className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold mb-6"
-                          >
-              The designer&apos;s new job
-            </h2>
-
-            <p className="text-[14px] leading-[1.6] text-black/70 mb-5">
-              We no longer design screens. We design the <em className="not-italic text-black/90 font-medium">rules</em> by which the system decides what to notice, when to speak, and how to help.
+          {/* 🔽 Two Fundamental Questions */}
+          <section className="mb-6 pt-6 border-t border-black/[0.06] dark:border-white/[0.06]">
+            <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70 mb-6">
+              This site is grounded in two fundamental questions that shape how I think about building software in this new era.
             </p>
 
-            <p className="text-[14px] leading-[1.6] text-black/60 mb-4">
-              This means defining:
-            </p>
-
-            <ul className="space-y-2.5 mb-6">
-              <li className="text-[14px] leading-[1.5] text-black/65 pl-5 relative before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-black/20 before:rounded-full">
-                What patterns matter?
-              </li>
-              <li className="text-[14px] leading-[1.5] text-black/65 pl-5 relative before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-black/20 before:rounded-full">
-                What confidence threshold triggers an alert?
-              </li>
-              <li className="text-[14px] leading-[1.5] text-black/65 pl-5 relative before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-black/20 before:rounded-full">
-                How should urgency translate to visual weight?
-              </li>
-              <li className="text-[14px] leading-[1.5] text-black/65 pl-5 relative before:content-[''] before:absolute before:left-0 before:top-[0.6em] before:w-1.5 before:h-1.5 before:bg-black/20 before:rounded-full">
-                When should the system stay silent?
-              </li>
-            </ul>
-
-            <p className="text-[14px] leading-[1.6] text-black/70">
-              These are the new design decisions. Not pixels, but <em className="not-italic font-medium text-black/90">principles</em>. Not layouts, but <em className="not-italic font-medium text-black/90">logic</em>.
-            </p>
-          </section>
-
-          {/* 🔽 Deeper Questions */}
-          <section className="mb-14 md:mb-16">
-            <h2
-              className="text-[12px] uppercase leading-none tracking-[0.08em] text-black/40 font-semibold mb-6"
-                          >
-              This raises deeper questions
-            </h2>
-
-            <p className="text-[14px] leading-[1.6] text-black/70 mb-8">
-              Building proactive AI systems is just the beginning. It opens up a fundamental rethinking of how we approach design itself.
-            </p>
-
-            <div className="space-y-8">
+            <div className="space-y-6">
               {/* Question 1 */}
               <div>
                 <h3
-                  className="text-[16px] md:text-[18px] leading-[1.3] tracking-[-0.01em] text-black font-semibold mb-3"
-                                  >
-                  How do we design for systems we can&apos;t fully predict?
+                  className="text-[16px] md:text-[18px] leading-[1.3] tracking-[-0.01em] text-black dark:text-white font-semibold mb-2"
+                >
+                  1. Designing for unpredictability
                 </h3>
-                <p className="text-[14px] leading-[1.6] text-black/60">
-                  We&apos;re moving from deterministic flows to adaptive systems. The same user, same context, might see different things each time. How do we build trust, consistency, and user agency when we can&apos;t control every outcome?
+                <p className="text-[14px] leading-[1.6] text-black/60 dark:text-white/60">
+                  How do we design systems we can&apos;t fully predict, while still building trust, consistency, and user agency?
                 </p>
               </div>
 
               {/* Question 2 */}
               <div>
                 <h3
-                  className="text-[16px] md:text-[18px] leading-[1.3] tracking-[-0.01em] text-black font-semibold mb-3"
-                                  >
-                  What do designers deliver when the interface designs itself?
+                  className="text-[16px] md:text-[18px] leading-[1.3] tracking-[-0.01em] text-black dark:text-white font-semibold mb-2"
+                >
+                  2. Redefining design artifacts
                 </h3>
-                <p className="text-[14px] leading-[1.6] text-black/60">
-                  If AI generates the UI, what replaces the Figma file? What are our new artifacts: rules, constraints, principles? How do we hand off logic instead of layouts?
+                <p className="text-[14px] leading-[1.6] text-black/60 dark:text-white/60">
+                  When the interface designs itself, what do designers actually deliver? Rules, constraints, principles, systems, and logic instead of static screens.
                 </p>
               </div>
             </div>
 
-            <p className="text-[14px] leading-[1.6] text-black/70 mt-8">
-              These are the questions I&apos;ll be exploring, one by one, with prototypes and frameworks for each.
+            <p className="text-[14px] leading-[1.6] text-black/70 dark:text-white/70 mt-6">
+              Everything here builds from these two questions. This is where I explore a set of opinions and ideas about how software design needs to evolve, through frameworks, prototypes, and design artifacts.
             </p>
           </section>
 
           {/* 🔽 Continue Reading Link */}
-          <footer className="pt-8 border-t border-black/[0.06]">
+          <footer className="pt-6 border-t border-black/[0.06] dark:border-white/[0.06]">
             <a
               href="/the-shift"
-              className="group flex items-center gap-3 text-[14px] leading-[1.5] text-black/70 hover:text-black transition-colors"
+              className="group flex items-center gap-3 text-[14px] leading-[1.5] text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
             >
               <span>Explore the questions this raises</span>
               <svg
-                className="w-4 h-4 text-black/40 group-hover:text-black group-hover:translate-x-1 transition-all"
+                className="w-4 h-4 text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white group-hover:translate-x-1 transition-all"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

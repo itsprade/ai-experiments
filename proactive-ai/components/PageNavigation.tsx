@@ -1,17 +1,21 @@
-// ✅ Reusable Component: Page navigation with home, page links, and social icons
+'use client';
+
+import { useTheme } from './ThemeProvider';
 
 interface PageNavigationProps {
   activePage: 'introduction' | 'the-shift';
 }
 
 export function PageNavigation({ activePage }: PageNavigationProps) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <>
       {/* 🔽 Page Navigation - Desktop: fixed vertical on left, Mobile: absolute horizontal on top */}
-      <div className="absolute md:fixed top-8 left-6 md:left-5 flex flex-row md:flex-col items-center gap-4 md:gap-[26px] text-black/40 font-mono text-xs uppercase tracking-wider z-20">
+      <div className="absolute md:fixed top-8 left-6 md:left-5 flex flex-row md:flex-col items-center gap-4 md:gap-[26px] text-black/40 dark:text-white/40 font-mono text-xs uppercase tracking-wider z-20">
         <a
           href="https://itsprade.com/"
-          className="hover:text-black/80"
+          className="hover:text-black/80 dark:hover:text-white/80"
           aria-label="Home"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -21,16 +25,16 @@ export function PageNavigation({ activePage }: PageNavigationProps) {
         </a>
         <a
           href="/"
-          className={`hover:text-black/80 md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap ${
-            activePage === 'introduction' ? 'text-black font-normal' : 'font-light'
+          className={`hover:text-black/80 dark:hover:text-white/80 md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap ${
+            activePage === 'introduction' ? 'text-black dark:text-white font-normal' : 'font-light'
           }`}
         >
           Introduction
         </a>
         <a
           href="/the-shift"
-          className={`hover:text-black/80 md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap ${
-            activePage === 'the-shift' ? 'text-black font-normal' : 'font-light'
+          className={`hover:text-black/80 dark:hover:text-white/80 md:[writing-mode:vertical-lr] md:rotate-180 whitespace-nowrap ${
+            activePage === 'the-shift' ? 'text-black dark:text-white font-normal' : 'font-light'
           }`}
         >
           The Shift
@@ -39,26 +43,77 @@ export function PageNavigation({ activePage }: PageNavigationProps) {
           href="https://x.com/itsprade"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:flex hover:text-black/80"
+          className="hidden md:flex hover:text-black/80 dark:hover:text-white/80"
           aria-label="Twitter"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
           </svg>
         </a>
+        {/* Theme Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="hidden md:flex hover:text-black/80 dark:hover:text-white/80 transition-colors"
+          aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+        >
+          {theme === 'light' ? (
+            // Sun icon (shown in light mode, click to go dark)
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          ) : (
+            // Moon icon (shown in dark mode, click to go light)
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          )}
+        </button>
       </div>
-      {/* 🔽 Mobile Navigation - X icon on right */}
-      <a
-        href="https://x.com/itsprade"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute top-8 right-6 md:hidden text-black/40 hover:text-black/80 z-20"
-        aria-label="Twitter"
-      >
-        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-      </a>
+      {/* 🔽 Mobile Navigation - X icon and theme toggle on right */}
+      <div className="absolute top-8 right-6 md:hidden flex items-center gap-4 z-20">
+        <button
+          onClick={toggleTheme}
+          className="text-black/40 dark:text-white/40 hover:text-black/80 dark:hover:text-white/80 transition-colors"
+          aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+        >
+          {theme === 'light' ? (
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          ) : (
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          )}
+        </button>
+        <a
+          href="https://x.com/itsprade"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-black/40 dark:text-white/40 hover:text-black/80 dark:hover:text-white/80"
+          aria-label="Twitter"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+      </div>
     </>
   );
 }
