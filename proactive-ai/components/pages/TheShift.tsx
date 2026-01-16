@@ -375,7 +375,7 @@ function ExpandableQuestion({ question, isSelected, onSelect, setRef }: {
       <button
         onClick={isEnabled ? onSelect : undefined}
         disabled={!isEnabled}
-        className={`w-full text-left pb-4 flex items-start gap-2 group ${isSelected ? 'pt-7' : 'pt-4'} ${!isEnabled ? 'cursor-default' : ''}`}
+        className={`w-full text-left pb-4 flex items-start gap-4 group ${isSelected ? 'pt-7' : 'pt-4'} ${!isEnabled ? 'cursor-default' : ''}`}
       >
         <span className={`text-[12px] mt-0.5 w-5 flex-shrink-0 transition-colors duration-200 ${numberClasses}`}>
           {question.id}.

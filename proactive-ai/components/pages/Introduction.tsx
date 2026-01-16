@@ -83,7 +83,7 @@ export function Introduction() {
             <h1
               className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.02em] text-black dark:text-white font-bold mb-5"
             >
-              Designing Proactive AI Systems
+              Rewiring how designers think about software in the age of AI
             </h1>
 
             <div className="space-y-3">
