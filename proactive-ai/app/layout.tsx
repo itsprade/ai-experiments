@@ -30,6 +30,23 @@ export default function RootLayout({
       <head>
         {/* Preload background image for instant display */}
         <link rel="preload" href="/bg-1.png" as="image" />
+        {/* Inline script to prevent flash of light theme in dark mode */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'dark' || (!theme)) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body
         className={`${inter.variable} ${bricolageGrotesque.variable} antialiased`}

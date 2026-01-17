@@ -398,7 +398,7 @@ function ExpandableQuestion({ question, isSelected, onSelect, setRef }: {
       {/* Coming soon text for disabled questions - shows on hover with height animation */}
       {!isEnabled && (
         <div className="overflow-hidden max-h-0 group-hover/question:max-h-8 opacity-0 group-hover/question:opacity-100 transition-all duration-300 ease-out -mt-2">
-          <span className="text-[12px] text-orange-500 pl-7 pb-4 block">
+          <span className="text-[12px] text-orange-500 pl-9 pb-4 block">
             Coming soon
           </span>
         </div>

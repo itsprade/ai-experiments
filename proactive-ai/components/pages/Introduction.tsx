@@ -147,13 +147,24 @@ export function Introduction() {
 
           {/* 🔽 Continue Reading Link */}
           <footer className="pt-6 border-t border-black/[0.06] dark:border-white/[0.06]">
+            {/* Explore Questions - GitHub style */}
             <a
               href="/the-shift"
-              className="group flex items-center gap-3 text-[14px] leading-[1.5] text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
+              className="group flex items-center gap-3.5 p-4 rounded-xl bg-gradient-to-r from-[#474747] to-[#1a1a1a] dark:from-[#3a3a3a] dark:to-[#252525] border border-white/10 hover:border-white/20 transition-all"
             >
-              <span>Explore the questions this raises</span>
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <p className="text-[14px] font-medium text-white">
+                  Explore the questions this raises
+                </p>
+                <p className="text-[12px] text-white/50">
+                  The Shift
+                </p>
+              </div>
+
+              {/* Arrow Icon */}
               <svg
-                className="w-4 h-4 text-black/40 dark:text-white/40 group-hover:text-black dark:group-hover:text-white group-hover:translate-x-1 transition-all"
+                className="w-5 h-5 text-white/40 group-hover:text-white/60 group-hover:translate-x-0.5 transition-all flex-shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -161,9 +172,10 @@ export function Introduction() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
-                <path d="M5 12h14M12 5l7 7-7 7"/>
+                <path d="M7 17L17 7M17 7H7M17 7V17"/>
               </svg>
             </a>
+
           </footer>
         </article>
       </div>
