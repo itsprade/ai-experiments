@@ -11,7 +11,7 @@ export function Introduction() {
   const thumbnailRef = useRef<HTMLButtonElement>(null);
 
   // Extract video ID from YouTube URL
-  const videoId = 'AW1sgrEsDHk';
+  const videoId = 'DoHqRs9SVpA';
 
   const handleOpenVideo = () => {
     if (thumbnailRef.current) {
@@ -41,7 +41,7 @@ export function Introduction() {
         <article className="w-full max-w-[640px]">
 
           {/* 🔽 Video Thumbnail */}
-          <div className="mb-6 pt-[64px]">
+          <div className="mb-16 pt-[64px]">
             <div className="relative w-fit group/video overflow-visible">
               {/* Blurred background glow - appears on hover */}
               <div
@@ -57,7 +57,7 @@ export function Introduction() {
               <button
                 ref={thumbnailRef}
                 onClick={handleOpenVideo}
-                className={`relative w-[160px] h-[90px] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-0 -rotate-4 group ${isVideoOpen ? 'invisible' : ''}`}
+                className={`relative w-[200px] h-[112px] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 hover:rotate-0 -rotate-4 group ${isVideoOpen ? 'invisible' : ''}`}
                 aria-label="Watch video"
               >
                 {/* YouTube Thumbnail */}

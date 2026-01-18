@@ -140,6 +140,25 @@
   }
 }
 
+/* Hide scrollbar but keep scroll functionality - global */
+html,
+body,
+*,
+*::before,
+*::after {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera, Arc */
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
 /* Custom animations for Proactive AI prototype */
 @keyframes subtle-scale {
   0%, 100% {

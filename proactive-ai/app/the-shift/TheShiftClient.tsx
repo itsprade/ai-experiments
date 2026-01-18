@@ -43,6 +43,7 @@ export default function TheShiftClient() {
   });
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showFullscreenButton, setShowFullscreenButton] = useState(true);
+  const [showResizeHandle, setShowResizeHandle] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const rightPanelRef = useRef<HTMLDivElement>(null);
 
@@ -120,6 +121,18 @@ export default function TheShiftClient() {
       setUserDismissedPreview(false);
     }
   }, [selectedQuestionId]);
+
+  // Delay showing resize handle until after panel animation completes
+  useEffect(() => {
+    if (isPanelOpen) {
+      const timer = setTimeout(() => {
+        setShowResizeHandle(true);
+      }, 400); // Wait for panel animation to complete
+      return () => clearTimeout(timer);
+    } else {
+      setShowResizeHandle(false);
+    }
+  }, [isPanelOpen]);
 
   const handleCloseFloatingPreview = () => {
     setUserDismissedPreview(true);
@@ -440,8 +453,8 @@ export default function TheShiftClient() {
         </FloatingPreview>
       )}
 
-      {/* 🔽 Resize Handle - Only show when panel is open */}
-      {isDesktop && isPanelOpen && (
+      {/* 🔽 Resize Handle - Only show after panel animation completes */}
+      {isDesktop && showResizeHandle && (
         <div
           className="absolute top-0 bottom-0 w-1 bg-transparent hover:bg-black/10 dark:hover:bg-white/10 flex items-center justify-center group z-50 hidden md:flex transition-opacity duration-300"
           style={{ left: `${leftWidth}%` }}
