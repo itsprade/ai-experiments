@@ -11,7 +11,7 @@ export function Introduction() {
   const thumbnailRef = useRef<HTMLButtonElement>(null);
 
   // Extract video ID from YouTube URL
-  const videoId = 'DoHqRs9SVpA';
+  const videoId = 'KDRWpDFgmbU';
 
   const handleOpenVideo = () => {
     if (thumbnailRef.current) {
